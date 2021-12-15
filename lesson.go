@@ -1,5 +1,32 @@
 package main
 
+import (
+	"fmt"
+	"strings"
+)
+
+// 11.文字列型
+func main() {
+	fmt.Println("Hello world")
+	fmt.Println("Hello" + "world")
+	fmt.Println("Hello world"[0])
+	fmt.Println(string("Hello world"[0]))
+	fmt.Printf("%T", "Hello"[0])
+
+	var s string = "Hello world"
+	fmt.Println(strings.Replace(s, "H", "X", 1))
+	fmt.Println(strings.Contains(s, "world"))
+
+	fmt.Println("test\n" +
+		"test")
+	fmt.Println(`test
+	test
+	      test`)
+
+	fmt.Println("\"")
+	fmt.Println(`"`)
+}
+
 // 10.数値型
 // func main() {
 // var (
