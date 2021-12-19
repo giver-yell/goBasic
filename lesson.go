@@ -1,5 +1,25 @@
 package main
 
+import "fmt"
+
+// 14.配列
+func main() {
+	var a [2]int
+	a[0] = 100
+	a[1] = 200
+	fmt.Println(a)
+
+	// 配列はサイズを変更できない
+	// var b [2]int = [2]int{100, 200}
+	// // b = append(b, 300) // 配列は値の追加ができない
+	// fmt.Println(b)
+
+	// slice
+	var b []int = []int{200, 300}
+	b = append(b, 300)
+	fmt.Println(b)
+}
+
 // 13.型変換
 // func main() {
 // 	var x int = 1
