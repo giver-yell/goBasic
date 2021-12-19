@@ -1,29 +1,24 @@
 package main
 
-import (
-	"fmt"
-	"strconv"
-)
-
 // 13.型変換
-func main() {
-	var x int = 1
-	xx := float64(x)
-	fmt.Printf("%T %v %f\n", xx, xx, xx)
+// func main() {
+// 	var x int = 1
+// 	xx := float64(x)
+// 	fmt.Printf("%T %v %f\n", xx, xx, xx)
 
-	var y float64 = 2.1
-	yy := int(y)
-	fmt.Printf("%T %v %d\n", yy, yy, yy)
+// 	var y float64 = 2.1
+// 	yy := int(y)
+// 	fmt.Printf("%T %v %d\n", yy, yy, yy)
 
-	var s string = "14"
-	// stringをint型に単純には型変換はできない
-	// i := int(s)
-	i, _ := strconv.Atoi(s)
-	fmt.Printf("%T, %v\n", i, i)
+// 	var s string = "14"
+// 	// stringをint型に単純には型変換はできない
+// 	// i := int(s)
+// 	i, _ := strconv.Atoi(s)
+// 	fmt.Printf("%T, %v\n", i, i)
 
-	h := "Hello world"
-	fmt.Println(h[0], string(h[0]))
-}
+// 	h := "Hello world"
+// 	fmt.Println(h[0], string(h[0]))
+// }
 
 // 12.論理値型
 // func main() {
