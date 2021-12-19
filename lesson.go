@@ -1,5 +1,41 @@
 package main
 
+import "fmt"
+
+// 16.スライスのmakeとcap
+func main() {
+	// n := make([]int, 3, 5)
+	// fmt.Printf("len=%d cap=%d value=%v\n", len(n), cap(n), n)
+	// n = append(n, 1, 3)
+	// fmt.Printf("len=%d cap=%d value=%v\n", len(n), cap(n), n)
+	// n = append(n, 4, 5, 6)
+	// fmt.Printf("len=%d cap=%d value=%v\n", len(n), cap(n), n)
+
+	// // lenとcapどちらも指定
+	// a := make([]int, 3)
+	// fmt.Printf("len=%d cap=%d value=%v\n", len(a), cap(a), a)
+
+	// b := make([]int, 0) // 0のスライスをメモリに確保
+	var c []int // nill メモリ確保しない
+	// fmt.Printf("len=%d cap=%d value=%v\n", len(b), cap(b), b)
+	// fmt.Printf("len=%d cap=%d value=%v\n", len(c), cap(c), c)
+
+	c = make([]int, 5)
+	for i := 0; i < 5; i++ {
+		c = append(c, i)
+		fmt.Println(c)
+	}
+	fmt.Println(c)
+
+	c = make([]int, 0, 5)
+	for i := 0; i < 5; i++ {
+		c = append(c, i)
+		fmt.Println(c)
+	}
+	fmt.Println(c)
+
+}
+
 // 15. スライス
 // func main() {
 // 	n := []int{1, 2, 3, 4, 5}
