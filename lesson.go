@@ -2,26 +2,47 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 )
 
-// 12.論理値型
+// 13.型変換
 func main() {
-	t, f := true, false
-	fmt.Printf("%T %v %t\n", t, t, t)
-	fmt.Printf("%T %v %t\n", f, f, 0)
+	var x int = 1
+	xx := float64(x)
+	fmt.Printf("%T %v %f\n", xx, xx, xx)
 
-	fmt.Println(true && true)
-	fmt.Println(true && false)
-	fmt.Println(false && false)
+	var y float64 = 2.1
+	yy := int(y)
+	fmt.Printf("%T %v %d\n", yy, yy, yy)
 
-	fmt.Println(true || true)
-	fmt.Println(true || false)
-	fmt.Println(false || false)
+	var s string = "14"
+	// stringをint型に単純には型変換はできない
+	// i := int(s)
+	i, _ := strconv.Atoi(s)
+	fmt.Printf("%T, %v\n", i, i)
 
-	fmt.Println(!true)
-	fmt.Println(!false)
-
+	h := "Hello world"
+	fmt.Println(h[0], string(h[0]))
 }
+
+// 12.論理値型
+// func main() {
+// 	t, f := true, false
+// 	fmt.Printf("%T %v %t\n", t, t, t)
+// 	fmt.Printf("%T %v %t\n", f, f, 0)
+
+// 	fmt.Println(true && true)
+// 	fmt.Println(true && false)
+// 	fmt.Println(false && false)
+
+// 	fmt.Println(true || true)
+// 	fmt.Println(true || false)
+// 	fmt.Println(false || false)
+
+// 	fmt.Println(!true)
+// 	fmt.Println(!false)
+
+// }
 
 // 11.文字列型
 // func main() {
