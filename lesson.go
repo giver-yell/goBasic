@@ -1,5 +1,18 @@
 package main
 
+import "fmt"
+
+// 18. バイト型
+func main() {
+	b := []byte{72, 73}
+	fmt.Println(b)
+	fmt.Println(string(b))
+
+	c := []byte("HI")
+	fmt.Println(c)
+	fmt.Println(string(c))
+}
+
 // 17.map
 // func main() {
 // 	m := map[string]int{"apple": 100, "banana": 200}
