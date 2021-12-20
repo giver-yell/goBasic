@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 // 19.関数
 // func add(x int, y int) int {
 // 	return x + y
@@ -12,31 +10,31 @@ import "fmt"
 // 	fmt.Println(r)
 // }
 
-func add(x, y int) (int, int) {
-	return x + y, x - y
-}
+// func add(x, y int) (int, int) {
+// 	return x + y, x - y
+// }
 
-func cal(price, item int) (result int) {
-	result = price * item
-	return // result
-}
+// func cal(price, item int) (result int) {
+// 	result = price * item
+// 	return // result
+// }
 
-func main() {
-	r1, r2 := add(10, 20)
-	fmt.Println(r1, r2)
+// func main() {
+// 	r1, r2 := add(10, 20)
+// 	fmt.Println(r1, r2)
 
-	r3 := cal(100, 2)
-	fmt.Println(r3)
+// 	r3 := cal(100, 2)
+// 	fmt.Println(r3)
 
-	f := func(x int) {
-		fmt.Println("inner func", x)
-	}
-	f(1)
+// 	f := func(x int) {
+// 		fmt.Println("inner func", x)
+// 	}
+// 	f(1)
 
-	func(x int) {
-		fmt.Println("inner func", x)
-	}(1)
-}
+// 	func(x int) {
+// 		fmt.Println("inner func", x)
+// 	}(1)
+// }
 
 // 18. バイト型
 // func main() {
