@@ -1,37 +1,35 @@
 package main
 
-import "fmt"
-
 // 20.クロージャ
-func incrementGenerator() func() int {
-	x := 0
-	return func() int {
-		x++
-		return x
-	}
-}
+// func incrementGenerator() func() int {
+// 	x := 0
+// 	return func() int {
+// 		x++
+// 		return x
+// 	}
+// }
 
-func circleArea(pi float64) func(radis float64) float64 {
-	return func(radis float64) float64 {
-		return pi * radis * radis
-	}
-}
+// func circleArea(pi float64) func(radis float64) float64 {
+// 	return func(radis float64) float64 {
+// 		return pi * radis * radis
+// 	}
+// }
 
-func main() {
-	counter := incrementGenerator()
-	fmt.Println(counter())
-	fmt.Println(counter())
-	fmt.Println(counter())
-	fmt.Println(counter())
+// func main() {
+// 	counter := incrementGenerator()
+// 	fmt.Println(counter())
+// 	fmt.Println(counter())
+// 	fmt.Println(counter())
+// 	fmt.Println(counter())
 
-	c1 := circleArea(3.14)
-	fmt.Println(c1(2))
-	fmt.Println(c1(3))
+// 	c1 := circleArea(3.14)
+// 	fmt.Println(c1(2))
+// 	fmt.Println(c1(3))
 
-	c2 := circleArea(3)
-	fmt.Println(c2(2))
-	fmt.Println(c2(3))
-}
+// 	c2 := circleArea(3)
+// 	fmt.Println(c2(2))
+// 	fmt.Println(c2(3))
+// }
 
 // 19.関数
 // func add(x int, y int) int {
