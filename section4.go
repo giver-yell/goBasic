@@ -1,37 +1,32 @@
 package main
 
-import (
-	"fmt"
-	"os"
-)
-
 // 28.defer
-func foo() {
-	defer fmt.Println("world foo")
+// func foo() {
+// 	defer fmt.Println("world foo")
 
-	fmt.Println("hello foo")
-}
+// 	fmt.Println("hello foo")
+// }
 
-func main() {
-	// defer fmt.Println("world")
+// func main() {
+// 	// defer fmt.Println("world")
 
-	// foo()
+// 	// foo()
 
-	// fmt.Println("hello")
+// 	// fmt.Println("hello")
 
-	// fmt.Println("run")
-	// defer fmt.Println("1")
-	// defer fmt.Println("2")
-	// defer fmt.Println("3")
-	// fmt.Println("success")
+// 	// fmt.Println("run")
+// 	// defer fmt.Println("1")
+// 	// defer fmt.Println("2")
+// 	// defer fmt.Println("3")
+// 	// fmt.Println("success")
 
-	// deferの実用例
-	file, _ := os.Open("./section4.go")
-	defer file.Close()
-	data := make([]byte, 100)
-	file.Read(data)
-	fmt.Println(string(data))
-}
+// 	// deferの実用例
+// 	file, _ := os.Open("./section4.go")
+// 	defer file.Close()
+// 	data := make([]byte, 100)
+// 	file.Read(data)
+// 	fmt.Println(string(data))
+// }
 
 // 27.switch
 // func getOsName() string {
