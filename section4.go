@@ -1,5 +1,38 @@
 package main
 
+import (
+	"fmt"
+	"time"
+)
+
+// 27.switch
+func getOsName() string {
+	return "deeefault"
+}
+
+func main() {
+	// os := "win"
+	// 1文でも書ける ※スコープはswitch文の中だけ
+	switch os := getOsName(); os {
+	case "mac":
+		fmt.Println("mac!")
+	case "windows":
+		fmt.Println("windows!")
+	// defaultはなくてもOK
+	default:
+		fmt.Println("default!", os)
+	}
+
+	// switchの条件を書かない
+	t := time.Now()
+	switch {
+	case t.Hour() < 12:
+		fmt.Println("morning!")
+	case t.Hour() < 17:
+		fmt.Println("afternoon!")
+	}
+}
+
 // 26.range
 // func main() {
 // 	l := []string{"python", "go", "ruby"}
