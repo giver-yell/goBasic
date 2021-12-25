@@ -1,25 +1,23 @@
 package main
 
-import "fmt"
-
 // 31.パニックとリカバー
 // panic を自分がコーディングするのは推奨されていない。何が起こったかわからないという状況を作らないというGoの思想
-func thirdPartyConnectDB() {
-	panic("Unable to connect database")
-}
+// func thirdPartyConnectDB() {
+// 	panic("Unable to connect database")
+// }
 
-func save() {
-	defer func() {
-		s := recover()
-		fmt.Println(s)
-	}()
-	thirdPartyConnectDB()
-}
+// func save() {
+// 	defer func() {
+// 		s := recover()
+// 		fmt.Println(s)
+// 	}()
+// 	thirdPartyConnectDB()
+// }
 
-func main() {
-	save()
-	fmt.Println("OK?")
-}
+// func main() {
+// 	save()
+// 	fmt.Println("OK?")
+// }
 
 // 30.エラーハンドリング（例外の代わり）
 // func main() {
