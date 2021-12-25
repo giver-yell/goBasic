@@ -1,31 +1,25 @@
 package main
 
-import (
-	"fmt"
-	"log"
-	"os"
-)
-
 // 30.エラーハンドリング（例外の代わり）
-func main() {
-	// 返り値が2つ
-	file, err := os.Open("./section4.go")
-	if err != nil {
-		log.Fatalln("Error!")
-	}
-	defer file.Close()
-	data := make([]byte, 100)
-	count, err := file.Read(data)
-	if err != nil {
-		log.Fatalln("Error2!")
-	}
-	fmt.Println(count, string(data))
+// func main() {
+// 	// 返り値が2つ
+// 	file, err := os.Open("./section4.go")
+// 	if err != nil {
+// 		log.Fatalln("Error!")
+// 	}
+// 	defer file.Close()
+// 	data := make([]byte, 100)
+// 	count, err := file.Read(data)
+// 	if err != nil {
+// 		log.Fatalln("Error2!")
+// 	}
+// 	fmt.Println(count, string(data))
 
-	// 返り値が1つなら1行で書く
-	if err = os.Chdir("test"); err != nil {
-		log.Fatalln("Error")
-	}
-}
+// 	// 返り値が1つなら1行で書く
+// 	if err = os.Chdir("test"); err != nil {
+// 		log.Fatalln("Error")
+// 	}
+// }
 
 // // 29.log
 // func LoggingSettings(logFile string) {
