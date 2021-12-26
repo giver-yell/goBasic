@@ -1,41 +1,39 @@
 package main
 
-import "fmt"
-
 // セクション5 ポインタ
 
 // 35.newとmakeの違い
-func main() {
+// func main() {
 
-	s := make([]int, 0)
-	fmt.Printf("%T\n", s)
+// 	s := make([]int, 0)
+// 	fmt.Printf("%T\n", s)
 
-	m := make(map[string]int)
-	fmt.Printf("%T\n", m)
+// 	m := make(map[string]int)
+// 	fmt.Printf("%T\n", m)
 
-	ch := make(chan int)
-	fmt.Printf("%T\n", ch)
+// 	ch := make(chan int)
+// 	fmt.Printf("%T\n", ch)
 
-	var p *int = new(int)
-	fmt.Printf("%T\n", p)
+// 	var p *int = new(int)
+// 	fmt.Printf("%T\n", p)
 
-	var st = new(struct{})
-	fmt.Printf("%T\n", st)
+// 	var st = new(struct{})
+// 	fmt.Printf("%T\n", st)
 
-	// メモリ確保
-	// var p *int = new(int)
-	// fmt.Println(p)
-	// fmt.Println(*p)
-	// *p++
-	// fmt.Println(*p)
+// 	// メモリ確保
+// 	// var p *int = new(int)
+// 	// fmt.Println(p)
+// 	// fmt.Println(*p)
+// 	// *p++
+// 	// fmt.Println(*p)
 
-	// メモリ確保しない
-	// var p2 *int
-	// fmt.Println(p2)
-	// // メモリ確保しないのでエラー
-	// *p2++
-	// fmt.Println(p2)
-}
+// 	// メモリ確保しない
+// 	// var p2 *int
+// 	// fmt.Println(p2)
+// 	// // メモリ確保しないのでエラー
+// 	// *p2++
+// 	// fmt.Println(p2)
+// }
 
 //34.ポインタ
 // func one(x int) {
