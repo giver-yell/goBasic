@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 // 32.演習
 /*
 Q1 . 以下のスライスから一番小さい数を探して出力するコードを書いてください。
@@ -39,22 +37,22 @@ m := map[string]int{
 // }
 
 // Q.2
-func main() {
-	m := map[string]int{
-		"apple":  200,
-		"banana": 300,
-		"grapes": 150,
-		"orange": 80,
-		"papaya": 500,
-		"kiwi":   90,
-	}
+// func main() {
+// 	m := map[string]int{
+// 		"apple":  200,
+// 		"banana": 300,
+// 		"grapes": 150,
+// 		"orange": 80,
+// 		"papaya": 500,
+// 		"kiwi":   90,
+// 	}
 
-	sum := 0
-	for _, v := range m {
-		sum += v
-	}
-	fmt.Println(sum)
-}
+// 	sum := 0
+// 	for _, v := range m {
+// 		sum += v
+// 	}
+// 	fmt.Println(sum)
+// }
 
 // 31.パニックとリカバー
 // panic を自分がコーディングするのは推奨されていない。何が起こったかわからないという状況を作らないというGoの思想
