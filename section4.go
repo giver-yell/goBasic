@@ -1,31 +1,6 @@
 package main
 
-//34.ポインタ
-// func one(x int) {
-// 	x = 1
-// }
-
-// func one2(x *int) {
-// 	*x = 1
-// }
-
-// func main() {
-// 	var n int = 100
-// 	one(n)
-// 	// 値は変わらない
-// 	fmt.Println(n)
-
-// 	one2(&n)
-// 	fmt.Println(n)
-
-// 	// fmt.Println(&n)
-
-// 	// var p *int = &n
-// 	// fmt.Println(p)
-
-// 	// fmt.Println(*p)
-// }
-
+// セクション4 ステートメント
 // 32.演習
 /*
 Q1 . 以下のスライスから一番小さい数を探して出力するコードを書いてください。
