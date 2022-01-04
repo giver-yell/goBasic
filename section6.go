@@ -2,40 +2,38 @@
 
 package main
 
-import "fmt"
-
 // 43.インターフェイスとダックタイピング
-type Human interface {
-	Say() string
-}
+// type Human interface {
+// 	Say() string
+// }
 
-type Person struct {
-	Name string
-}
+// type Person struct {
+// 	Name string
+// }
 
-func (p *Person) Say() string {
-	p.Name = "Mr." + p.Name
-	fmt.Println(p.Name)
-	return p.Name
-}
+// func (p *Person) Say() string {
+// 	p.Name = "Mr." + p.Name
+// 	fmt.Println(p.Name)
+// 	return p.Name
+// }
 
-func DriveCar(human Human) {
-	if human.Say() == "Mr.Mike" {
-		fmt.Println("run")
-	} else {
-		fmt.Println("Get out")
-	}
-}
+// func DriveCar(human Human) {
+// 	if human.Say() == "Mr.Mike" {
+// 		fmt.Println("run")
+// 	} else {
+// 		fmt.Println("Get out")
+// 	}
+// }
 
-func main() {
-	var mike Human = &Person{"Mike"}
-	var x Human = &Person{"X"}
+// func main() {
+// 	var mike Human = &Person{"Mike"}
+// 	var x Human = &Person{"X"}
 
-	// mike.Say()
-	DriveCar(mike)
-	DriveCar(x)
+// 	// mike.Say()
+// 	DriveCar(mike)
+// 	DriveCar(x)
 
-}
+// }
 
 // 41.Embedded
 // type Vertex struct {
