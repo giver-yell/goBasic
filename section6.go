@@ -35,7 +35,7 @@ package main
 
 // }
 
-// 41.Embedded
+// 41.Embedded（埋め込み）
 // type Vertex struct {
 // 	x, y int
 // }
