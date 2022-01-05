@@ -2,6 +2,36 @@
 
 package main
 
+import "fmt"
+
+// 44.タイプアサーションとSwitch type文
+func do(i interface{}) {
+	// intのみ
+	// ii := i.(int)
+	// ii *= 2
+	// fmt.Println(ii)
+
+	// stringのみ
+	// ss := i.(string)
+	// fmt.Println(ss + "!")
+
+	// switch type文
+	switch v := i.(type) {
+	case int:
+		fmt.Println(v * 2)
+	case string:
+		fmt.Println(v + "!")
+	default:
+		fmt.Printf("I don't know %T\n", v)
+	}
+}
+
+func main() {
+	do(10)
+	do("Mike")
+	do(true)
+}
+
 // 43.インターフェイスとダックタイピング
 // type Human interface {
 // 	Say() string
