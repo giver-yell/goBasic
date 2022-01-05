@@ -2,6 +2,23 @@
 
 package main
 
+import "fmt"
+
+// 45.Stringer
+type Person struct {
+	Name string
+	Age  int
+}
+
+func (p Person) String() string {
+	return fmt.Sprintf("My name is %v.", p.Name)
+}
+
+func main() {
+	mike := Person{"Mike", 22}
+	fmt.Println(mike)
+}
+
 // 44.タイプアサーションとSwitch type文
 // func do(i interface{}) {
 // 	// intのみ
