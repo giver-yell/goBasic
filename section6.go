@@ -2,10 +2,6 @@
 
 package main
 
-import (
-	"fmt"
-)
-
 /*
 演習
 Q1. 以下に、7と表示されるメソッドを作成してください。
@@ -57,18 +53,18 @@ func main(){
 // }
 
 // Q2.
-type Vertex struct {
-	X, Y int
-}
+// type Vertex struct {
+// 	X, Y int
+// }
 
-func (v Vertex) String() string {
-	return fmt.Sprintf("X is %d! Y is %d!", v.X, v.Y)
-}
+// func (v Vertex) String() string {
+// 	return fmt.Sprintf("X is %d! Y is %d!", v.X, v.Y)
+// }
 
-func main() {
-	v := Vertex{3, 4}
-	fmt.Println(v)
-}
+// func main() {
+// 	v := Vertex{3, 4}
+// 	fmt.Println(v)
+// }
 
 // 46.カスタムエラー
 // type UserNotFound struct {
