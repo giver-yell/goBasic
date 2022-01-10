@@ -1,5 +1,47 @@
 package main
 
+import (
+	"fmt"
+	"sync"
+	"time"
+)
+
+// 53.producerとconsumer
+func producer(ch chan int, i int) {
+	// something
+	ch <- i * 2
+}
+
+func consumer(ch chan int, wg *sync.WaitGroup) {
+	for i := range ch {
+		// エラー時にwg.Done()が呼ばれない対策としてインナーfunc()を利用
+		func() {
+			defer wg.Done()
+			fmt.Println("process", i*1000)
+		}()
+	}
+	fmt.Println("#######")
+}
+
+func main() {
+	var wg sync.WaitGroup
+	ch := make(chan int)
+
+	// Producer
+	for i := 0; i < 10; i++ {
+		wg.Add(1)
+		go producer(ch, i)
+	}
+
+	// Consumer
+	go consumer(ch, &wg)
+	wg.Wait()
+	// close がないとfor文が完了しない
+	close(ch)
+	time.Sleep(2 * time.Second)
+	fmt.Println("Done")
+}
+
 // 52.channelのrangeとclose
 // func goroutine(s []int, c chan int) {
 // 	sum := 0
