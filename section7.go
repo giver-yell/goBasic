@@ -1,31 +1,26 @@
 package main
 
-import (
-	"fmt"
-	"time"
-)
-
 // 56.Default Selectionと for break
-func main() {
-	tick := time.Tick(100 * time.Millisecond)
-	boom := time.After(500 * time.Millisecond)
-	// select for を抜ける
-OuterLoop:
-	for {
-		select {
-		case <-tick:
-			fmt.Println("tick.")
-		case <-boom:
-			fmt.Println("boom.")
-			break OuterLoop
-			// retrun
-		default:
-			fmt.Println(".")
-			time.Sleep(50 * time.Millisecond)
-		}
-	}
-	fmt.Println("#######")
-}
+// func main() {
+// 	tick := time.Tick(100 * time.Millisecond)
+// 	boom := time.After(500 * time.Millisecond)
+// 	// select for を抜ける
+// OuterLoop:
+// 	for {
+// 		select {
+// 		case <-tick:
+// 			fmt.Println("tick.")
+// 		case <-boom:
+// 			fmt.Println("boom.")
+// 			break OuterLoop
+// 			// retrun
+// 		default:
+// 			fmt.Println(".")
+// 			time.Sleep(50 * time.Millisecond)
+// 		}
+// 	}
+// 	fmt.Println("#######")
+// }
 
 // 55.channelとselect
 // func goroutine1(ch chan string) {
