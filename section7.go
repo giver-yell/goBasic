@@ -1,5 +1,46 @@
 package main
 
+import (
+	"fmt"
+	"sync"
+	"time"
+)
+
+// 57.sync.Mutex
+type Counter struct {
+	v   map[string]int
+	mux sync.Mutex
+}
+
+func (c *Counter) Inc(key string) {
+	c.mux.Lock()
+	defer c.mux.Unlock()
+	c.v[key]++
+}
+
+func (c *Counter) Value(key string) int {
+	c.mux.Lock()
+	c.mux.Unlock()
+	return c.v[key]
+}
+
+func main() {
+	// c := make(map[string]int)
+	c := Counter{v: make(map[string]int)}
+	go func() {
+		for i := 0; i < 10; i++ {
+			c.Inc("key")
+		}
+	}()
+	go func() {
+		for i := 0; i < 10; i++ {
+			c.Inc("key")
+		}
+	}()
+	time.Sleep(1 * time.Second)
+	fmt.Println(c, c.Value("key"))
+}
+
 // 56.Default Selectionと for break
 // func main() {
 // 	tick := time.Tick(100 * time.Millisecond)
