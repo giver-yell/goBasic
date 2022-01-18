@@ -1,4 +1,4 @@
-package main
+// package main
 
 // セクション3 定義
 // セクション3 演習

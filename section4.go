@@ -1,4 +1,4 @@
-package main
+// package main
 
 // セクション4 ステートメント
 // 32.演習

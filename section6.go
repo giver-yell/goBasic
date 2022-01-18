@@ -1,6 +1,6 @@
 // セクション6 Structオリエンテッド
 
-package main
+// package main
 
 /*
 演習
