@@ -1,23 +1,17 @@
 package main
 
-import (
-	"fmt"
-	"time"
-)
-
 /*
 セクション9
 */
 
 // 67.time
-
 // postgresのtime の型は RFC3339
-func main() {
-	t := time.Now()
-	fmt.Println(t)
-	fmt.Println(t.Format(time.RFC3339))
-	fmt.Println(t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second())
-}
+// func main() {
+// 	t := time.Now()
+// 	fmt.Println(t)
+// 	fmt.Println(t.Format(time.RFC3339))
+// 	fmt.Println(t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second())
+// }
 
 /*
 セクション8
