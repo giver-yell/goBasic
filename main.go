@@ -1,23 +1,42 @@
 package main
 
+import (
+	"fmt"
+	"time"
+)
+
+/*
+セクション9
+*/
+
+// 67.time
+
+// postgresのtime の型は RFC3339
+func main() {
+	t := time.Now()
+	fmt.Println(t)
+	fmt.Println(t.Format(time.RFC3339))
+	fmt.Println(t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second())
+}
+
 /*
 セクション8
 */
 
 // 64.サードパーティのpackagインストール
-import (
-	"fmt"
+// import (
+// 	"fmt"
 
-	"github.com/markcheno/go-quote"
-	"github.com/markcheno/go-talib"
-)
+// 	"github.com/markcheno/go-quote"
+// 	"github.com/markcheno/go-talib"
+// )
 
-func main() {
-	spy, _ := quote.NewQuoteFromYahoo("spy", "2016-01-01", "2016-04-01", quote.Daily, true)
-	fmt.Print(spy.CSV())
-	rsi2 := talib.Rsi(spy.Close, 2)
-	fmt.Println(rsi2)
-}
+// func main() {
+// 	spy, _ := quote.NewQuoteFromYahoo("spy", "2016-01-01", "2016-04-01", quote.Daily, true)
+// 	fmt.Print(spy.CSV())
+// 	rsi2 := talib.Rsi(spy.Close, 2)
+// 	fmt.Println(rsi2)
+// }
 
 // 60.パッケージ
 // import (
