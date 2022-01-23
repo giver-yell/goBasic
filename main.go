@@ -3,30 +3,30 @@
 */
 package main
 
-import (
-	"bytes"
-	"fmt"
-	"io/ioutil"
-)
+// import (
+// 	"bytes"
+// 	"fmt"
+// 	"io/ioutil"
+// )
 
 // 72.ioutil
-func main() {
-	// content, err := ioutil.ReadFile("main.go")
-	// if err != nil {
-	// 	log.Fatalln(err)
-	// }
-	// fmt.Println(string(content))
+// func main() {
+// content, err := ioutil.ReadFile("main.go")
+// if err != nil {
+// 	log.Fatalln(err)
+// }
+// fmt.Println(string(content))
 
-	//  ファイル出力
-	// if err := ioutil.WriteFile("ioutil_temp.go", content, 0666); err != nil {
-	// 	log.Fatalln(err)
-	// }
+//  ファイル出力
+// if err := ioutil.WriteFile("ioutil_temp.go", content, 0666); err != nil {
+// 	log.Fatalln(err)
+// }
 
-	// byte出力
-	r := bytes.NewBuffer([]byte("abc"))
-	content, _ := ioutil.ReadAll(r)
-	fmt.Println(string(content))
-}
+// byte出力
+// 	r := bytes.NewBuffer([]byte("abc"))
+// 	content, _ := ioutil.ReadAll(r)
+// 	fmt.Println(string(content))
+// }
 
 // 71.context
 // import (
