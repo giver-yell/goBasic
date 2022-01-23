@@ -3,13 +3,49 @@
 */
 package main
 
+// 73.http
+import (
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+)
+
+func main() {
+	// resp, _ := http.Get("http://example.com")
+	// defer resp.Body.Close()
+	// body, _ := ioutil.ReadAll(resp.Body)
+	// fmt.Println(string(body))
+
+	base, _ := url.Parse("http://example.com")
+	reference, _ := url.Parse("/test?a=1&b=2")
+	endpoint := base.ResolveReference(reference).String()
+	fmt.Println(endpoint)
+	// get
+	req, _ := http.NewRequest("GET", endpoint, nil)
+	// post
+	// req, _ := http.NewRequest("POST", endpoint, bytes.NewBuffer([]byte("password")))
+	// header追加
+	req.Header.Add("If-None-Match", `W/"wyzzy"`)
+	// urlクエリ追加
+	q := req.URL.Query()
+	q.Add("c", "3&%")
+	fmt.Println(q)
+	fmt.Println(q.Encode())
+
+	var client *http.Client = &http.Client{}
+	resp, _ := client.Do(req)
+	body, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println(string(body))
+}
+
+// 72.ioutil
 // import (
 // 	"bytes"
 // 	"fmt"
 // 	"io/ioutil"
 // )
 
-// 72.ioutil
 // func main() {
 // content, err := ioutil.ReadFile("main.go")
 // if err != nil {
