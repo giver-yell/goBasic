@@ -1,36 +1,31 @@
 package main
 
-import (
-	"fmt"
-	"sort"
-)
-
 /*
 セクション9
 */
 
 // 69.sort
-func main() {
-	i := []int{1, 2, 3, 4, 5}
-	s := []string{"d", "a", "f"}
-	p := []struct {
-		Name string
-		Age  int
-	}{
-		{"Nancy", 20},
-		{"Vera", 40},
-		{"Mike", 30},
-		{"Bob", 50},
-	}
-	fmt.Println(i, s, p)
-	sort.Ints(i)
-	sort.Strings(s)
-	// for で回すイメージ
-	sort.Slice(p, func(i, j int) bool { return p[i].Name < p[j].Name })
-	sort.Slice(p, func(i, j int) bool { return p[i].Age < p[j].Age })
+// func main() {
+// 	i := []int{1, 2, 3, 4, 5}
+// 	s := []string{"d", "a", "f"}
+// 	p := []struct {
+// 		Name string
+// 		Age  int
+// 	}{
+// 		{"Nancy", 20},
+// 		{"Vera", 40},
+// 		{"Mike", 30},
+// 		{"Bob", 50},
+// 	}
+// 	fmt.Println(i, s, p)
+// 	sort.Ints(i)
+// 	sort.Strings(s)
+// 	// for で回すイメージ
+// 	sort.Slice(p, func(i, j int) bool { return p[i].Name < p[j].Name })
+// 	sort.Slice(p, func(i, j int) bool { return p[i].Age < p[j].Age })
 
-	fmt.Println(i, s, p)
-}
+// 	fmt.Println(i, s, p)
+// }
 
 // 68.regex
 // func main() {
