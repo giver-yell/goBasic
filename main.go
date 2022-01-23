@@ -4,43 +4,43 @@
 package main
 
 // 71.context
-import (
-	"context"
-	"fmt"
-	"time"
-)
+// import (
+// 	"context"
+// 	"fmt"
+// 	"time"
+// )
 
-func longProcess(ctx context.Context, ch chan string) {
-	fmt.Println("run")
-	time.Sleep(2 * time.Second)
-	fmt.Println("finish")
-	ch <- "result"
-}
+// func longProcess(ctx context.Context, ch chan string) {
+// 	fmt.Println("run")
+// 	time.Sleep(2 * time.Second)
+// 	fmt.Println("finish")
+// 	ch <- "result"
+// }
 
-func main() {
-	ch := make(chan string)
-	ctx := context.Background()
-	ctx, cancel := context.WithTimeout(ctx, 1*time.Second)
-	defer cancel()
-	// 何も処理したくない場合
-	// ctx := context.TODO()
-	go longProcess(ctx, ch)
-	// longProcessを実行させたくない場合
-	// cancel()
+// func main() {
+// 	ch := make(chan string)
+// 	ctx := context.Background()
+// 	ctx, cancel := context.WithTimeout(ctx, 1*time.Second)
+// 	defer cancel()
+// 	// 何も処理したくない場合
+// 	// ctx := context.TODO()
+// 	go longProcess(ctx, ch)
+// 	// longProcessを実行させたくない場合
+// 	// cancel()
 
-CTXLOOP:
-	for {
-		select {
-		case <-ctx.Done():
-			fmt.Println(ctx.Err())
-			break CTXLOOP
-		case <-ch:
-			fmt.Println("success")
-			break CTXLOOP
-		}
-	}
-	fmt.Println("#######")
-}
+// CTXLOOP:
+// 	for {
+// 		select {
+// 		case <-ctx.Done():
+// 			fmt.Println(ctx.Err())
+// 			break CTXLOOP
+// 		case <-ch:
+// 			fmt.Println("success")
+// 			break CTXLOOP
+// 		}
+// 	}
+// 	fmt.Println("#######")
+// }
 
 // 70.iota
 // const (
