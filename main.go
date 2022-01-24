@@ -3,40 +3,40 @@
 */
 package main
 
-import (
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-)
-
 // 75.hmacでAPI認証
-var DB = map[string]string{
-	"User1Key": "User1Secret",
-	"User2Key": "User2Secret",
-}
+// import (
+// 	"crypto/hmac"
+// 	"crypto/sha256"
+// 	"encoding/hex"
+// 	"fmt"
+// )
 
-func Server(apiKey, sign string, data []byte) {
-	apiSecret := DB[apiKey]
-	h := hmac.New(sha256.New, []byte(apiSecret))
-	h.Write(data)
-	expectedHMAC := hex.EncodeToString(h.Sum(nil))
-	fmt.Println(sign == expectedHMAC)
-}
+// var DB = map[string]string{
+// 	"User1Key": "User1Secret",
+// 	"User2Key": "User2Secret",
+// }
 
-func main() {
-	const apiKey = "User2Key"
-	const apiSecret = "User2Secret"
+// func Server(apiKey, sign string, data []byte) {
+// 	apiSecret := DB[apiKey]
+// 	h := hmac.New(sha256.New, []byte(apiSecret))
+// 	h.Write(data)
+// 	expectedHMAC := hex.EncodeToString(h.Sum(nil))
+// 	fmt.Println(sign == expectedHMAC)
+// }
 
-	data := []byte("data")
-	h := hmac.New(sha256.New, []byte(apiSecret))
-	h.Write(data)
-	sign := hex.EncodeToString(h.Sum(nil))
+// func main() {
+// 	const apiKey = "User2Key"
+// 	const apiSecret = "User2Secret"
 
-	fmt.Println(sign)
+// 	data := []byte("data")
+// 	h := hmac.New(sha256.New, []byte(apiSecret))
+// 	h.Write(data)
+// 	sign := hex.EncodeToString(h.Sum(nil))
 
-	Server(apiKey, sign, data)
-}
+// 	fmt.Println(sign)
+
+// 	Server(apiKey, sign, data)
+// }
 
 // 74. json.UnmarshalとMarshalとエンコード
 // import (
