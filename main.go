@@ -3,6 +3,45 @@
 */
 package main
 
+// 76.semaphore
+import (
+	"context"
+	"fmt"
+	"time"
+
+	"golang.org/x/sync/semaphore"
+)
+
+// 同時実行数を指定
+var s *semaphore.Weighted = semaphore.NewWeighted(2)
+
+func longProcess(ctx context.Context) {
+	// 他の処理をキャンセルする
+	isAcquire := s.TryAcquire(1)
+	if !isAcquire {
+		fmt.Println("Could not get lock")
+		return
+	}
+
+	// blocking(他の処理を待たせる)
+	// if err := s.Acquire(ctx, 1); err != nil {
+	// 	fmt.Println(err)
+	// 	return
+	// }
+	defer s.Release(1)
+	fmt.Println("wait ...")
+	time.Sleep(1 * time.Second)
+	fmt.Println("Done")
+}
+
+func main() {
+	ctx := context.TODO()
+	go longProcess(ctx)
+	go longProcess(ctx)
+	go longProcess(ctx)
+	time.Sleep((5 * time.Second))
+}
+
 // 75.hmacでAPI認証
 // import (
 // 	"crypto/hmac"
