@@ -3,6 +3,36 @@
 */
 package main
 
+import (
+	"fmt"
+
+	"gopkg.in/ini.v1"
+)
+
+// 77.iniでconfigファイルの設定を読み込む
+type ConfigList struct {
+	Port      int
+	Dbname    string
+	SQLDriver string
+}
+
+var Config ConfigList
+
+func init() {
+	cfg, _ := ini.Load("config.ini")
+	Config = ConfigList{
+		Port:      cfg.Section("web").Key("port").MustInt(),
+		Dbname:    cfg.Section("db").Key("name").MustString("example.sql"),
+		SQLDriver: cfg.Section("db").Key("sqllite3").String(),
+	}
+}
+
+func main() {
+	fmt.Printf("%T %v\n", Config.Port, Config.Port)
+	fmt.Printf("%T %v\n", Config.Dbname, Config.Dbname)
+	fmt.Printf("%T %v\n", Config.SQLDriver, Config.SQLDriver)
+}
+
 // 76.semaphore
 // import (
 // 	"context"

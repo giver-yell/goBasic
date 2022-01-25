@@ -19,6 +19,8 @@
 - semaphore
   `go mod download golang.org/x/sync`
   `go install golang.org/x/sync/semaphore`
+- go ini
+  `go get gopkg.in/ini.v1`
 
 ## ドキュメントインストール
 
