@@ -3,13 +3,259 @@
 */
 package main
 
+// 80.JSON-RPC 2.0 over WebSocketでBitcoinの価格をリアルタイムに取得する
+// import (
+// 	"log"
+// 	"net/url"
+
+// 	"github.com/gorilla/websocket"
+// )
+
+// type JsonRPC2 struct {
+// 	Version string      `json:"jsonrpc"`
+// 	Method  string      `json:"method"`
+// 	Params  interface{} `json:"params"`
+// 	Result  interface{} `json:"result,omitempty"`
+// 	Id      *int        `json:"id,omitempty"`
+// }
+// type SubscribeParams struct {
+// 	Channel string `json:"channel"`
+// }
+
+// func main() {
+// 	u := url.URL{Scheme: "wss", Host: "ws.lightstream.bitflyer.com", Path: "/json-rpc"}
+// 	log.Printf("connecting to %s", u.String())
+
+// 	c, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
+// 	if err != nil {
+// 		log.Fatal("dial:", err)
+// 	}
+// 	defer c.Close()
+
+// 	if err := c.WriteJSON(&JsonRPC2{Version: "2.0", Method: "subscribe", Params: &SubscribeParams{"lightning_ticker_BTC_JPY"}}); err != nil {
+// 		log.Fatal("subscribe:", err)
+// 		return
+// 	}
+
+// 	for {
+// 		message := new(JsonRPC2)
+// 		if err := c.ReadJSON(message); err != nil {
+// 			log.Println("read:", err)
+// 			return
+// 		}
+
+// 		if message.Method == "channelMessage" {
+// 			log.Println(message.Params)
+// 		}
+// 	}
+// }
+
+// 77.iniでconfigファイルの設定を読み込む
+// import (
+// 	"fmt"
+
+// 	"gopkg.in/ini.v1"
+// )
+// type ConfigList struct {
+// 	Port      int
+// 	Dbname    string
+// 	SQLDriver string
+// }
+
+// var Config ConfigList
+
+// func init() {
+// 	cfg, _ := ini.Load("config.ini")
+// 	Config = ConfigList{
+// 		Port:      cfg.Section("web").Key("port").MustInt(),
+// 		Dbname:    cfg.Section("db").Key("name").MustString("example.sql"),
+// 		SQLDriver: cfg.Section("db").Key("sqllite3").String(),
+// 	}
+// }
+
+// func main() {
+// 	fmt.Printf("%T %v\n", Config.Port, Config.Port)
+// 	fmt.Printf("%T %v\n", Config.Dbname, Config.Dbname)
+// 	fmt.Printf("%T %v\n", Config.SQLDriver, Config.SQLDriver)
+// }
+
+// 76.semaphore
+// import (
+// 	"context"
+// 	"fmt"
+// 	"time"
+
+// 	"golang.org/x/sync/semaphore"
+// )
+
+// // 同時実行数を指定
+// var s *semaphore.Weighted = semaphore.NewWeighted(2)
+
+// func longProcess(ctx context.Context) {
+// 	// 他の処理をキャンセルする
+// 	isAcquire := s.TryAcquire(1)
+// 	if !isAcquire {
+// 		fmt.Println("Could not get lock")
+// 		return
+// 	}
+
+// 	// blocking(他の処理を待たせる)
+// 	// if err := s.Acquire(ctx, 1); err != nil {
+// 	// 	fmt.Println(err)
+// 	// 	return
+// 	// }
+// 	defer s.Release(1)
+// 	fmt.Println("wait ...")
+// 	time.Sleep(1 * time.Second)
+// 	fmt.Println("Done")
+// }
+
+// func main() {
+// 	ctx := context.TODO()
+// 	go longProcess(ctx)
+// 	go longProcess(ctx)
+// 	go longProcess(ctx)
+// 	time.Sleep((5 * time.Second))
+// }
+
+// 75.hmacでAPI認証
+// import (
+// 	"crypto/hmac"
+// 	"crypto/sha256"
+// 	"encoding/hex"
+// 	"fmt"
+// )
+
+// var DB = map[string]string{
+// 	"User1Key": "User1Secret",
+// 	"User2Key": "User2Secret",
+// }
+
+// func Server(apiKey, sign string, data []byte) {
+// 	apiSecret := DB[apiKey]
+// 	h := hmac.New(sha256.New, []byte(apiSecret))
+// 	h.Write(data)
+// 	expectedHMAC := hex.EncodeToString(h.Sum(nil))
+// 	fmt.Println(sign == expectedHMAC)
+// }
+
+// func main() {
+// 	const apiKey = "User2Key"
+// 	const apiSecret = "User2Secret"
+
+// 	data := []byte("data")
+// 	h := hmac.New(sha256.New, []byte(apiSecret))
+// 	h.Write(data)
+// 	sign := hex.EncodeToString(h.Sum(nil))
+
+// 	fmt.Println(sign)
+
+// 	Server(apiKey, sign, data)
+// }
+
+// 74. json.UnmarshalとMarshalとエンコード
+// import (
+// 	"encoding/json"
+// 	"fmt"
+// )
+
+// type T struct{}
+
+// type Person struct {
+// 	// jsonで隠す
+// 	// Name string `json:"-"`
+// 	Name string `json:"name,omitempty"`
+// 	// jsonでstringへ変換
+// 	// Age       int      `json:"age,string"`
+// 	// 0の場合隠す
+// 	Age       int      `json:"age,omitempty"`
+// 	Nicknames []string `json:"nicknames"`
+// 	// structを隠す場合はポインタ
+// 	T *T `json:"T,omitempty"`
+// }
+
+// // unmarshal変換
+// func (p *Person) UnmarshalJSON(b []byte) error {
+// 	type Person2 struct {
+// 		Name string
+// 	}
+// 	var p2 Person2
+// 	err := json.Unmarshal(b, &p2)
+// 	if err != nil {
+// 		fmt.Println(err)
+// 	}
+// 	p.Name = p2.Name + "!"
+// 	return err
+// }
+
+// // JSONの値変換
+// // func (p Person) MarshalJSON() ([]byte, error) {
+// // 	v, err := json.Marshal(&struct {
+// // 		Name string
+// // 	}{
+// // 		Name: "Mr." + p.Name,
+// // 	})
+// // 	return v, err
+// // }
+
+// func main() {
+// 	// b := []byte(`{"name":"Mike","age":"20","nicknames":["a","b","c"]}`)
+// 	// b := []byte(`{"name":"","age":0,"nicknames":["a","b","c"]}`)
+// 	b := []byte(`{"name":"Mike","age":0,"nicknames":["a","b","c"]}`)
+
+// 	var p Person
+// 	if err := json.Unmarshal(b, &p); err != nil {
+// 		fmt.Println(err)
+// 	}
+// 	fmt.Println(p.Name, p.Age, p.Nicknames)
+
+// 	v, _ := json.Marshal(p)
+// 	fmt.Println(string(v))
+// }
+
+// 73.http
+// import (
+// 	"fmt"
+// 	"io/ioutil"
+// 	"net/http"
+// 	"net/url"
+// )
+
+// func main() {
+// 	// resp, _ := http.Get("http://example.com")
+// 	// defer resp.Body.Close()
+// 	// body, _ := ioutil.ReadAll(resp.Body)
+// 	// fmt.Println(string(body))
+
+// 	base, _ := url.Parse("http://example.com")
+// 	reference, _ := url.Parse("/test?a=1&b=2")
+// 	endpoint := base.ResolveReference(reference).String()
+// 	fmt.Println(endpoint)
+// 	// get
+// 	req, _ := http.NewRequest("GET", endpoint, nil)
+// 	// post
+// 	// req, _ := http.NewRequest("POST", endpoint, bytes.NewBuffer([]byte("password")))
+// 	// header追加
+// 	req.Header.Add("If-None-Match", `W/"wyzzy"`)
+// 	// urlクエリ追加
+// 	q := req.URL.Query()
+// 	q.Add("c", "3&%")
+// 	fmt.Println(q)
+// 	fmt.Println(q.Encode())
+
+// 	var client *http.Client = &http.Client{}
+// 	resp, _ := client.Do(req)
+// 	body, _ := ioutil.ReadAll(resp.Body)
+// 	fmt.Println(string(body))
+// }
+
+// 72.ioutil
 // import (
 // 	"bytes"
 // 	"fmt"
 // 	"io/ioutil"
 // )
 
-// 72.ioutil
 // func main() {
 // content, err := ioutil.ReadFile("main.go")
 // if err != nil {
