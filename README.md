@@ -21,6 +21,8 @@
   `go install golang.org/x/sync/semaphore`
 - go ini
   `go get gopkg.in/ini.v1`
+- JSON-RPC 2.0 over WebSocket で Bitcoin の価格をリアルタイムに取得する
+  `go get github.com/gorilla/websocket`
 
 ## ドキュメントインストール
 
