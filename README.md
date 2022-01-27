@@ -24,6 +24,19 @@
 - JSON-RPC 2.0 over WebSocket で Bitcoin の価格をリアルタイムに取得する
   `go get github.com/gorilla/websocket`
 
+## sqlite3 インストール
+
+- sqlite3 インストール
+  ` brew install sqlite`
+- xcode インストール
+  - ホームページよりインストール https://developer.apple.com/download/all/?q=xcode
+- xcode コマンドツールをインストール
+  `xcode-select --install`
+- gcc のインストール確認
+  `gcc --version`
+- sqlite3 のサードパーティのパッケージインストール
+  `go get github.com/mattn/go-sqlite3`
+
 ## ドキュメントインストール
 
 - golang
