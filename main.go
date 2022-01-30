@@ -4,7 +4,6 @@
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
 )
 
@@ -30,11 +29,14 @@ func loadPage(title string) (*Page, error) {
 }
 
 func main() {
-	p1 := &Page{Title: "test", Body: []byte("This is a simple page")}
-	p1.save()
 
-	p2, _ := loadPage(p1.Title)
-	fmt.Println(string(p2.Body))
+	// p1 := &Page{Title: "test", Body: []byte("This is a simple page")}
+	// // write
+	// p1.save()
+
+	// // read
+	// p2, _ := loadPage(p1.Title)
+	// fmt.Println(string(p2.Body))
 }
 
 /*
