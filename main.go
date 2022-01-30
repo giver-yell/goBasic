@@ -4,114 +4,114 @@
 package main
 
 // 84.DB操作
-import (
-	"database/sql"
-	"fmt"
-	"log"
+// import (
+// 	"database/sql"
+// 	"fmt"
+// 	"log"
 
-	_ "github.com/mattn/go-sqlite3"
-)
+// 	_ "github.com/mattn/go-sqlite3"
+// )
 
-var DbConnection *sql.DB
+// var DbConnection *sql.DB
 
-type Person struct {
-	Name string
-	Age  int
-}
+// type Person struct {
+// 	Name string
+// 	Age  int
+// }
 
-func main() {
-	// DB接続
-	DbConnection, _ := sql.Open("sqlite3", "./example.sql")
-	defer DbConnection.Close()
+// func main() {
+// 	// DB接続
+// 	DbConnection, _ := sql.Open("sqlite3", "./example.sql")
+// 	defer DbConnection.Close()
 
-	// CREATE TABLE
-	cmd := `CREATE TABLE IF NOT EXISTS person(
-		name STRING,
-		age INT)`
-	_, err := DbConnection.Exec(cmd)
-	if err != nil {
-		log.Fatalln(err)
-	}
+// 	// CREATE TABLE
+// 	cmd := `CREATE TABLE IF NOT EXISTS person(
+// 		name STRING,
+// 		age INT)`
+// 	_, err := DbConnection.Exec(cmd)
+// 	if err != nil {
+// 		log.Fatalln(err)
+// 	}
 
-	// INSERT
-	// cmd = "INSERT INTO person (name, age) VALUES (?, ?)"
-	// execの結果は返さない
-	// _, err = DbConnection.Exec(cmd, "Nancy", 20)
-	// if err != nil {
-	// 	log.Fatalln(err)
-	// }
+// 	// INSERT
+// 	// cmd = "INSERT INTO person (name, age) VALUES (?, ?)"
+// 	// execの結果は返さない
+// 	// _, err = DbConnection.Exec(cmd, "Nancy", 20)
+// 	// if err != nil {
+// 	// 	log.Fatalln(err)
+// 	// }
 
-	// UPDATE
-	// cmd = "UPDATE person SET age = ? WHERE name = ?"
-	// _, err = DbConnection.Exec(cmd, 25, "Mike")
-	// if err != nil {
-	// 	log.Fatalln(err)
-	// }
+// 	// UPDATE
+// 	// cmd = "UPDATE person SET age = ? WHERE name = ?"
+// 	// _, err = DbConnection.Exec(cmd, 25, "Mike")
+// 	// if err != nil {
+// 	// 	log.Fatalln(err)
+// 	// }
 
-	// マルチSELECT
-	// cmd = "SELECT * FROM person"
-	// rows, _ := DbConnection.Query(cmd)
-	// defer rows.Close()
-	// var pp []Person
-	// for rows.Next() {
-	// 	var p Person
-	// 	err := rows.Scan(&p.Name, &p.Age)
-	// 	if err != nil {
-	// 		log.Println(err)
-	// 	}
-	// 	pp = append(pp, p)
-	// }
-	// err = rows.Err()
-	// if err != nil {
-	// 	log.Fatalln(err)
-	// }
-	// for _, p := range pp {
-	// 	fmt.Println(p.Name, p.Age)
-	// }
+// 	// マルチSELECT
+// 	// cmd = "SELECT * FROM person"
+// 	// rows, _ := DbConnection.Query(cmd)
+// 	// defer rows.Close()
+// 	// var pp []Person
+// 	// for rows.Next() {
+// 	// 	var p Person
+// 	// 	err := rows.Scan(&p.Name, &p.Age)
+// 	// 	if err != nil {
+// 	// 		log.Println(err)
+// 	// 	}
+// 	// 	pp = append(pp, p)
+// 	// }
+// 	// err = rows.Err()
+// 	// if err != nil {
+// 	// 	log.Fatalln(err)
+// 	// }
+// 	// for _, p := range pp {
+// 	// 	fmt.Println(p.Name, p.Age)
+// 	// }
 
-	// single select
-	// cmd = "SELECT * FROM person WHERE age = ?"
-	// row := DbConnection.QueryRow(cmd, 20)
-	// var p Person
-	// err = row.Scan(&p.Name, &p.Age)
-	// if err != nil {
-	// 	if err == sql.ErrNoRows {
-	// 		log.Println("No rows")
-	// 	} else {
-	// 		log.Println(err)
-	// 	}
-	// }
-	// fmt.Println(p.Name, p.Age)
+// 	// single select
+// 	// cmd = "SELECT * FROM person WHERE age = ?"
+// 	// row := DbConnection.QueryRow(cmd, 20)
+// 	// var p Person
+// 	// err = row.Scan(&p.Name, &p.Age)
+// 	// if err != nil {
+// 	// 	if err == sql.ErrNoRows {
+// 	// 		log.Println("No rows")
+// 	// 	} else {
+// 	// 		log.Println(err)
+// 	// 	}
+// 	// }
+// 	// fmt.Println(p.Name, p.Age)
 
-	// DELETE
-	// cmd = "DELETE FROM person WHERE age = ?"
-	// _, err = DbConnection.Exec(cmd, 20)
-	// if err != nil {
-	// 	log.Println(err)
-	// }
+// 	// DELETE
+// 	// cmd = "DELETE FROM person WHERE age = ?"
+// 	// _, err = DbConnection.Exec(cmd, 20)
+// 	// if err != nil {
+// 	// 	log.Println(err)
+// 	// }
 
-	// table nameを動的にselect
-	tableName := "person"
-	cmd = fmt.Sprintf("SELECT * FROM  %s", tableName)
-	rows, _ := DbConnection.Query(cmd)
-	defer rows.Close()
-	var pp []Person
-	for rows.Next() {
-		var p Person
-		err := rows.Scan(&p.Name, &p.Age)
-		if err != nil {
-			log.Println(err)
-		}
-		pp = append(pp, p)
-	}
-	err = rows.Err()
-	if err != nil {
-		log.Fatalln(err)
-	}
-	for _, p := range pp {
-		fmt.Println(p.Name, p.Age)
-	}
-}
+// 	// table nameを動的にselect
+// 	tableName := "person"
+// 	cmd = fmt.Sprintf("SELECT * FROM  %s", tableName)
+// 	rows, _ := DbConnection.Query(cmd)
+// 	defer rows.Close()
+// 	var pp []Person
+// 	for rows.Next() {
+// 		var p Person
+// 		err := rows.Scan(&p.Name, &p.Age)
+// 		if err != nil {
+// 			log.Println(err)
+// 		}
+// 		pp = append(pp, p)
+// 	}
+// 	err = rows.Err()
+// 	if err != nil {
+// 		log.Fatalln(err)
+// 	}
+// 	for _, p := range pp {
+// 		fmt.Println(p.Name, p.Age)
+// 	}
+// }
 
 // 80.JSON-RPC 2.0 over WebSocketでBitcoinの価格をリアルタイムに取得する
 // import (
