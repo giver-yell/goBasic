@@ -1,7 +1,46 @@
 /*
-セクション9
+セクション13
 */
 package main
+
+import (
+	"fmt"
+	"io/ioutil"
+)
+
+// 85.Web Applications 1 -ioutil
+type Page struct {
+	Title string
+	Body  []byte
+}
+
+func (p *Page) save() error {
+	filename := p.Title + ".txt"
+	// 0600は読み書き可能
+	return ioutil.WriteFile(filename, p.Body, 0600)
+}
+
+func loadPage(title string) (*Page, error) {
+	filename := title + ".txt"
+	body, err := ioutil.ReadFile(filename)
+	if err != nil {
+		return nil, err
+	}
+	return &Page{Title: title, Body: body}, nil
+}
+
+func main() {
+	p1 := &Page{Title: "test", Body: []byte("This is a simple page")}
+	p1.save()
+
+	p2, _ := loadPage(p1.Title)
+	fmt.Println(string(p2.Body))
+}
+
+/*
+セクション12
+*/
+// package main
 
 // 84.DB操作
 // import (
@@ -113,6 +152,9 @@ package main
 // 	}
 // }
 
+/*
+セクション11
+*/
 // 80.JSON-RPC 2.0 over WebSocketでBitcoinの価格をリアルタイムに取得する
 // import (
 // 	"log"
@@ -228,6 +270,9 @@ package main
 // 	time.Sleep((5 * time.Second))
 // }
 
+/*
+セクション10
+*/
 // 75.hmacでAPI認証
 // import (
 // 	"crypto/hmac"
@@ -359,6 +404,9 @@ package main
 // 	fmt.Println(string(body))
 // }
 
+/*
+セクション9
+*/
 // 72.ioutil
 // import (
 // 	"bytes"
