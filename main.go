@@ -3,11 +3,15 @@
 */
 package main
 
+// 86.Web Applications 2 - http.ListenAndServer
+// 85.Web Applications 1 -ioutil
 import (
+	"fmt"
 	"io/ioutil"
+	"log"
+	"net/http"
 )
 
-// 85.Web Applications 1 -ioutil
 type Page struct {
 	Title string
 	Body  []byte
@@ -28,8 +32,22 @@ func loadPage(title string) (*Page, error) {
 	return &Page{Title: title, Body: body}, nil
 }
 
-func main() {
+func viewHandler(w http.ResponseWriter, r *http.Request) {
+	// /view/test
+	// /view/ 以降のURLを取得
+	title := r.URL.Path[len("/view/"):]
+	p, _ := loadPage(title)
+	fmt.Fprintf(w, "<h1>%s</h1><div>%s</div>", p.Title, p.Body)
+}
 
+func main() {
+	// 86.
+	http.HandleFunc("/view/", viewHandler)
+	// :の前に何も書かなければlocalhostを指定
+	// nilでデフォルトのhandler → / で404を返却
+	log.Fatal(http.ListenAndServe(":8080", nil))
+
+	// 85.
 	// p1 := &Page{Title: "test", Body: []byte("This is a simple page")}
 	// // write
 	// p1.save()
