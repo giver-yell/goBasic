@@ -5,6 +5,22 @@ import "fmt"
 /* 5.ポインタ */
 // 35. newとmakeの違い
 func main() {
+	// slice
+	s := make([]int, 0)
+	fmt.Printf("%T\n", s)
+
+	// map
+	m := make(map[string]int)
+	fmt.Printf("%T\n", m)
+
+	// channel
+	ch := make(chan int)
+	fmt.Printf("%T\n", ch)
+
+	// struct
+	var st = new(struct{})
+	fmt.Printf("%T\n", st)
+
 	// メモリ領域確保はnew
 	var p *int = new(int)
 	fmt.Println(*p) // 0
