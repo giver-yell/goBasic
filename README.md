@@ -44,5 +44,16 @@
 - golang  
   `go get golang.org/x/tools/cmd/godoc`
 
-- `fmt`コマンド確認   
-  `go doc fmt`
+- godocをコマンドで確認
+   - 例)`fmt`を確認      
+  `go doc fmt`  
+  
+### go1.18インストール
+1. go1.18をofficialのリファレンスからダウンロード  
+https://go.dev/dl/  
+2. `.zshrc`にPATHを追加  
+```
+path=(
+  /usr/local/go/bin
+)
+```
