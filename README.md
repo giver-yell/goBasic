@@ -44,7 +44,8 @@
 - golang  
   `go get golang.org/x/tools/cmd/godoc`
 
-- `fmt`コマンド確認   
+- godocをコマンドで確認
+   - 例)`fmt`を確認      
   `go doc fmt`  
   
 ### go1.18インストール
