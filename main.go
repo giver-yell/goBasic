@@ -1,27 +1,41 @@
 package main
 
-import (
-	"fmt"
-	"strconv"
-)
+import "fmt"
 
 /* 3.定義 */
-// 13.型変換
+
+// 14.配列
 func main() {
-	// intからfloat
-	var x int = 1
-	xx := float64(x)
-	fmt.Printf("%T %v %f\n", xx, xx, xx)
+	var a [2]int
+	a[0] = 100
+	a[1] = 200
+	fmt.Println(a)
 
-	// stringからintへの型変換はstrconv.Atoi(A:asciiアスキー)
-	var s string = "14"
-	i, _ := strconv.Atoi(s)
-	fmt.Printf("%T %v\n", i, i)
+	var b [2]int = [2]int{100, 200}
+	// 配列はサイズを変更できないのでエラー
+	// b = append(b, 300) // エラー
+	fmt.Println(b)
 
-	// ASCII
-	h := "Hello world"
-	fmt.Println(string(h[0])) // H
+	var c []int = []int{100, 200}
+	fmt.Println(c)
 }
+
+// 13.型変換
+// func main() {
+// 	// intからfloat
+// 	var x int = 1
+// 	xx := float64(x)
+// 	fmt.Printf("%T %v %f\n", xx, xx, xx)
+
+// 	// stringからintへの型変換はstrconv.Atoi(A:asciiアスキー)
+// 	var s string = "14"
+// 	i, _ := strconv.Atoi(s)
+// 	fmt.Printf("%T %v\n", i, i)
+
+// 	// ASCII
+// 	h := "Hello world"
+// 	fmt.Println(string(h[0])) // H
+// }
 
 // 7.import
 // func main() {
