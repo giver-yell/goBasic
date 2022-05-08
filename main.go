@@ -4,29 +4,45 @@ import "fmt"
 
 /* 3.定義 */
 
-// 15.slice
+// 17.map
 func main() {
-	n := []int{1, 2, 3, 4, 5, 6}
-	fmt.Println(n)
-	fmt.Println(n[2])
-	fmt.Println(n[2:4])
-	fmt.Println(n[:2])
-	fmt.Println(n[2:])
-	fmt.Println(n[:])
+	m := map[string]int{"apple": 100, "banana": 200}
+	fmt.Println(m)
+	m["new"] = 500
+	fmt.Println(m)
 
-	n[2] = 100
-	fmt.Println(n)
+	fmt.Println(m["nothing"])
 
-	n = append(n, 100, 200, 300)
-	fmt.Println(n)
+	v, ok := m["apple"]
+	fmt.Println(v, ok)
 
-	var board = [][]int{
-		[]int{0, 1, 2},
-		[]int{3, 4, 5},
-		[]int{6, 7, 8},
-	}
-	fmt.Println(board)
+	v2, ok2 := m["nothing"]
+	fmt.Println(v2, ok2)
 }
+
+// 15.slice
+// func main() {
+// 	n := []int{1, 2, 3, 4, 5, 6}
+// 	fmt.Println(n)
+// 	fmt.Println(n[2])
+// 	fmt.Println(n[2:4])
+// 	fmt.Println(n[:2])
+// 	fmt.Println(n[2:])
+// 	fmt.Println(n[:])
+
+// 	n[2] = 100
+// 	fmt.Println(n)
+
+// 	n = append(n, 100, 200, 300)
+// 	fmt.Println(n)
+
+// 	var board = [][]int{
+// 		[]int{0, 1, 2},
+// 		[]int{3, 4, 5},
+// 		[]int{6, 7, 8},
+// 	}
+// 	fmt.Println(board)
+// }
 
 // 14.配列
 // func main() {
