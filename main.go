@@ -4,21 +4,32 @@ import "fmt"
 
 /* 3.定義 */
 
-// 17.map
+// 18.byte
 func main() {
-	m := map[string]int{"apple": 100, "banana": 200}
-	fmt.Println(m)
-	m["new"] = 500
-	fmt.Println(m)
+	b := []byte{72, 73}
+	fmt.Println(b)
+	fmt.Println(string(b)) // HI
 
-	fmt.Println(m["nothing"])
-
-	v, ok := m["apple"]
-	fmt.Println(v, ok)
-
-	v2, ok2 := m["nothing"]
-	fmt.Println(v2, ok2)
+	c := []byte("HI")
+	fmt.Println(c)
+	fmt.Println(string(c))
 }
+
+// 17.map
+// func main() {
+// 	m := map[string]int{"apple": 100, "banana": 200}
+// 	fmt.Println(m)
+// 	m["new"] = 500
+// 	fmt.Println(m)
+
+// 	fmt.Println(m["nothing"])
+
+// 	v, ok := m["apple"]
+// 	fmt.Println(v, ok)
+
+// 	v2, ok2 := m["nothing"]
+// 	fmt.Println(v2, ok2)
+// }
 
 // 15.slice
 // func main() {
