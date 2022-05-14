@@ -2,37 +2,66 @@ package main
 
 import (
 	"fmt"
-	"time"
+	"os"
 )
 
 /* ステートメント */
 
-// 27.switch
-func getOsName() string {
-	return "aj"
+// 28.defer
+func foo() {
+	defer fmt.Println("world foo")
+
+	fmt.Println("hello foo")
 }
 
 func main() {
-	// os := getOsName()
-	switch os := getOsName(); os {
-	case "mac":
-		fmt.Println("mac")
-	case "windows":
-		fmt.Println("windows")
-	default:
-		fmt.Println("default", os)
-	}
+	/*
+		defer fmt.Println("world")
 
-	t := time.Now()
-	fmt.Println(t)
-	fmt.Println(t.Hour())
-	switch {
-	case t.Hour() < 12:
-		fmt.Println("morning")
-	case t.Hour() < 17:
-		fmt.Println("afternoon")
-	}
+		foo()
+
+		fmt.Println("HELLO")
+	*/
+	/*
+		fmt.Println("run")
+		defer fmt.Println(1)
+		defer fmt.Println(2)
+		defer fmt.Println(3)
+		fmt.Println("succsess")
+	*/
+	file, _ := os.Open("./main.go")
+	defer file.Close()
+	data := make([]byte, 100)
+	file.Read(data)
+	fmt.Println(string(data))
 }
+
+// 27.switch
+// func getOsName() string {
+// 	return "aj"
+// }
+
+// func main() {
+// 	// os := getOsName()
+// 	switch os := getOsName(); os {
+// 	case "mac":
+// 		fmt.Println("mac")
+// 	case "windows":
+// 		fmt.Println("windows")
+// 	default:
+// 		fmt.Println("default", os)
+// 	}
+
+// 	t := time.Now()
+// 	fmt.Println(t)
+// 	fmt.Println(t.Hour())
+// 	switch {
+// 	case t.Hour() < 12:
+// 		fmt.Println("morning")
+// 	case t.Hour() < 17:
+// 		fmt.Println("afternoon")
+// 	}
+// }
 
 // 26.range
 // func main() {
