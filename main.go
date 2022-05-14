@@ -1,39 +1,69 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 /* ステートメント */
 
-// 25.range
+// 27.switch
+func getOsName() string {
+	return "aj"
+}
+
 func main() {
-	l := []string{"python", "go", "java"}
-
-	for i := 0; i < len(l); i++ {
-		fmt.Println(i, l[i])
+	// os := getOsName()
+	switch os := getOsName(); os {
+	case "mac":
+		fmt.Println("mac")
+	case "windows":
+		fmt.Println("windows")
+	default:
+		fmt.Println("default", os)
 	}
 
-	// foreachの代わり
-	for i, v := range l {
-		fmt.Println(i, v)
-	}
-
-	for _, v := range l {
-		fmt.Println(v)
-	}
-
-	// map
-	m := map[string]int{"apple": 100, "banana": 200}
-
-	for k, v := range m {
-		fmt.Println(k, v)
-	}
-	for k := range m {
-		fmt.Println(k)
-	}
-	for _, v := range m {
-		fmt.Println(v)
+	t := time.Now()
+	fmt.Println(t)
+	fmt.Println(t.Hour())
+	switch {
+	case t.Hour() < 12:
+		fmt.Println("morning")
+	case t.Hour() < 17:
+		fmt.Println("afternoon")
 	}
 }
+
+// 26.range
+// func main() {
+// 	l := []string{"python", "go", "java"}
+
+// 	for i := 0; i < len(l); i++ {
+// 		fmt.Println(i, l[i])
+// 	}
+
+// 	// foreachの代わり
+// 	for i, v := range l {
+// 		fmt.Println(i, v)
+// 	}
+
+// 	for _, v := range l {
+// 		fmt.Println(v)
+// 	}
+
+// 	// map
+// 	m := map[string]int{"apple": 100, "banana": 200}
+
+// 	for k, v := range m {
+// 		fmt.Println(k, v)
+// 	}
+// 	for k := range m {
+// 		fmt.Println(k)
+// 	}
+// 	for _, v := range m {
+// 		fmt.Println(v)
+// 	}
+// }
 
 // 25.for
 // func main() {
