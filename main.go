@@ -2,197 +2,235 @@ package main
 
 import "fmt"
 
-/* 3.定義 */
+/* ステートメント */
+
 // 演習
+/*
+Q1 . 以下のスライスから一番小さい数を探して出力するコードを書いてください。
+
+l := []int{100, 300, 23, 11, 23, 2, 4, 6, 4}
+
+Q2. 以下の果物の価格の合計を出力するコードを書いてください。
+
+m := map[string]int{
+    "apple":  200,
+    "banana": 300,
+    "grapes": 150,
+    "orange": 80,
+    "papaya": 500,
+    "kiwi":   90,
+}
+*/
 func main() {
-	/* Q1. 以下の1.11をint型に変換して出力してください。 */
-	f := 1.11
-	ff := int(f)
-	println(ff)
+	// Q1
+	l := []int{100, 300, 23, 11, 23, 2, 4, 6, 4}
+	var min int
 
-	/* Q2. コードを書かずに以下の出力結果を答えてください。 */
-	s := []int{1, 2, 5, 6, 2, 3, 1}
-	fmt.Println(s[2:4])
+	for k, num := range l {
+		if k == 0 {
+			min = num
+			continue
+		}
+		if min > num {
+			min = num
+		}
+	}
+	fmt.Println(min)
 
-	/*
-		Q3. 以下のコードを実行した時に
-		fmt.Printf("%T %v", m, m)
-		以下のような出力結果となるmを作成してください。
-		map[string]int map[Mike:20 Nancy:24 Messi:30]
-	*/
-	m := map[string]int{"Mike": 20, "Nancy": 24, "Messi": 30}
-	fmt.Printf("%T %v", m, m)
+	// Q2
+	m := map[string]int{
+		"apple":  200,
+		"banana": 300,
+		"grapes": 150,
+		"orange": 80,
+		"papaya": 500,
+		"kiwi":   90,
+	}
 
+	sum := 0
+	for _, v := range m {
+		sum += v
+	}
+	fmt.Println(sum)
 }
 
-// 21.可変長引数
-// func foo(params ...int) {
-// 	fmt.Println(len(params), params)
+// 31. panicとrecover
+// 例外処理。Golangでは、30.エラーハンドリングが推奨されているので基本的には使用しない
+
+// 30.エラーハンドリング
+// func main() {
+// 	file, err := os.Open("./main.go")
+// 	if err != nil {
+// 		log.Fatalln("Error")
+// 	}
+// 	defer file.Close()
+// 	data := make([]byte, 100)
+// 	count, err := file.Read(data)
+// 	if err != nil {
+// 		log.Fatalln("Error")
+// 	}
+// 	fmt.Println(count, string(data))
+// }
+
+// 29.log
+// func LoggingSettings(logFile string) {
+// 	logfile, _ := os.OpenFile(logFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+// 	multiLogFile := io.MultiWriter(os.Stdout, logfile)
+// 	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
+// 	// log.SetFlags(log.Ldate | log.Ltime | log.Llongfile)
+// 	log.SetOutput(multiLogFile)
 // }
 
 // func main() {
-// 	foo(10, 20)
-// 	foo(10, 20, 30)
+// 	LoggingSettings("test.log")
+
+// 	_, err := os.Open("aaa")
+// 	if err != nil {
+// 		log.Fatalln("Exit", err)
+// 	}
+
+// 	log.Println("loggint")
+// 	log.Printf("%T %v", "test", "test")
+
+// 	// fatalはexitされる
+// 	log.Fatalf("%T %v", "test", "test")
+// 	log.Fatalln("error!")
+
+// 	fmt.Println("ok")
 // }
 
-// 20.クロージャー
-// func incrementGenerator() func() int {
-// 	x := 0
-// 	return func() int {
-// 		x++
-// 		return x
+// 28.defer
+// func foo() {
+// 	defer fmt.Println("world foo")
+
+// 	fmt.Println("hello foo")
+// }
+
+// func main() {
+// 	/*
+// 		defer fmt.Println("world")
+
+// 		foo()
+
+// 		fmt.Println("HELLO")
+// 	*/
+// 	/*
+// 		fmt.Println("run")
+// 		defer fmt.Println(1)
+// 		defer fmt.Println(2)
+// 		defer fmt.Println(3)
+// 		fmt.Println("succsess")
+// 	*/
+// 	file, _ := os.Open("./main.go")
+// 	defer file.Close()
+// 	data := make([]byte, 100)
+// 	file.Read(data)
+// 	fmt.Println(string(data))
+// }
+
+// 27.switch
+// func getOsName() string {
+// 	return "aj"
+// }
+
+// func main() {
+// 	// os := getOsName()
+// 	switch os := getOsName(); os {
+// 	case "mac":
+// 		fmt.Println("mac")
+// 	case "windows":
+// 		fmt.Println("windows")
+// 	default:
+// 		fmt.Println("default", os)
+// 	}
+
+// 	t := time.Now()
+// 	fmt.Println(t)
+// 	fmt.Println(t.Hour())
+// 	switch {
+// 	case t.Hour() < 12:
+// 		fmt.Println("morning")
+// 	case t.Hour() < 17:
+// 		fmt.Println("afternoon")
 // 	}
 // }
 
-// func circleArea(pi float64) func(radis float64) float64 {
-// 	return func(radis float64) float64 {
-// 		return pi * radis * radis
+// 26.range
+// func main() {
+// 	l := []string{"python", "go", "java"}
+
+// 	for i := 0; i < len(l); i++ {
+// 		fmt.Println(i, l[i])
 // 	}
-// }
 
-// func main() {
-// 	counter := incrementGenerator()
-// 	fmt.Println(counter())
-// 	fmt.Println(counter())
-// 	fmt.Println(counter())
-// 	fmt.Println(counter())
-
-// 	c1 := circleArea(3.14)
-// 	fmt.Println(c1(2))
-
-// 	c2 := circleArea(3)
-// 	fmt.Println(c2(2))
-// }
-
-// 19.func
-// func add(x, y int) (int, int) {
-// 	return x + y, x - y
-// }
-
-// func calc(price, item int) (result int) {
-// 	result = price * item
-// 	return
-// }
-
-// func main() {
-// 	r1, r2 := add(10, 20)
-// 	fmt.Println(r1, r2)
-
-// 	r3 := calc(100, 2)
-// 	fmt.Println(r3)
-
-// 	// inner func
-// 	f := func(x int) {
-// 		fmt.Println("inner func", x)
+// 	// foreachの代わり
+// 	for i, v := range l {
+// 		fmt.Println(i, v)
 // 	}
-// 	f(1)
 
-// 	func(x int) {
-// 		fmt.Println("inner func", x)
-// 	}(1)
-// }
+// 	for _, v := range l {
+// 		fmt.Println(v)
+// 	}
 
-// 18.byte
-// func main() {
-// 	b := []byte{72, 73}
-// 	fmt.Println(b)
-// 	fmt.Println(string(b)) // HI
-
-// 	c := []byte("HI")
-// 	fmt.Println(c)
-// 	fmt.Println(string(c))
-// }
-
-// 17.map
-// func main() {
+// 	// map
 // 	m := map[string]int{"apple": 100, "banana": 200}
-// 	fmt.Println(m)
-// 	m["new"] = 500
-// 	fmt.Println(m)
 
-// 	fmt.Println(m["nothing"])
-
-// 	v, ok := m["apple"]
-// 	fmt.Println(v, ok)
-
-// 	v2, ok2 := m["nothing"]
-// 	fmt.Println(v2, ok2)
-// }
-
-// 15.slice
-// func main() {
-// 	n := []int{1, 2, 3, 4, 5, 6}
-// 	fmt.Println(n)
-// 	fmt.Println(n[2])
-// 	fmt.Println(n[2:4])
-// 	fmt.Println(n[:2])
-// 	fmt.Println(n[2:])
-// 	fmt.Println(n[:])
-
-// 	n[2] = 100
-// 	fmt.Println(n)
-
-// 	n = append(n, 100, 200, 300)
-// 	fmt.Println(n)
-
-// 	var board = [][]int{
-// 		[]int{0, 1, 2},
-// 		[]int{3, 4, 5},
-// 		[]int{6, 7, 8},
+// 	for k, v := range m {
+// 		fmt.Println(k, v)
 // 	}
-// 	fmt.Println(board)
+// 	for k := range m {
+// 		fmt.Println(k)
+// 	}
+// 	for _, v := range m {
+// 		fmt.Println(v)
+// 	}
 // }
 
-// 14.配列
+// 25.for
 // func main() {
-// 	var a [2]int
-// 	a[0] = 100
-// 	a[1] = 200
-// 	fmt.Println(a)
+// 	for i := 0; i < 10; i++ {
+// 		if i == 3 {
+// 			fmt.Println("continue")
+// 			continue
+// 		}
 
-// 	var b [2]int = [2]int{100, 200}
-// 	// 配列はサイズを変更できないのでエラー
-// 	// b = append(b, 300) // エラー
-// 	fmt.Println(b)
+// 		if i > 5 {
+// 			fmt.Println("break")
+// 			break
+// 		}
+// 		fmt.Println(i)
+// 	}
 
-// 	// sliceはサイズ変更可能
-// 	var c []int = []int{100, 200}
-// 	fmt.Println(c)
+// 	sum := 1
+// 	// for ; sum < 10 {
+// 	for sum < 10 {
+// 		sum += sum
+// 		fmt.Println(sum)
+// 	}
+// 	fmt.Println(sum)
+
+// 	// 無限ループ
+// 	for {
+// 		fmt.Println("hello")
+// 	}
 // }
 
-// 13.型変換
-// func main() {
-// 	// intからfloat
-// 	var x int = 1
-// 	xx := float64(x)
-// 	fmt.Printf("%T %v %f\n", xx, xx, xx)
-
-// 	// stringからintへの型変換はstrconv.Atoi(A:asciiアスキー)
-// 	var s string = "14"
-// 	i, _ := strconv.Atoi(s)
-// 	fmt.Printf("%T %v\n", i, i)
-
-// 	// ASCII
-// 	h := "Hello world"
-// 	fmt.Println(string(h[0])) // H
-// }
-
-// 7.import
-// func main() {
-// 	fmt.Println("Hello world", time.Now())
-// 	fmt.Println(user.Current())
-// }
-
-// 6.Hello world
-// func init() {
-// 	fmt.Println("Init!")
-// }
-
-// func bazz() {
-// 	fmt.Println("Bazz")
+// 24.if
+// func by2(num int) string {
+// 	if num%2 == 0 {
+// 		return "ok"
+// 	} else {
+// 		return "no"
+// 	}
 // }
 
 // func main() {
-// 	bazz()
-// 	fmt.Println("Hello, world")
+// 	result := by2(10)
+// 	if result == "ok" {
+// 		fmt.Println("great")
+// 	}
+
+// 	if result2 := by2(10); result2 == "ok" {
+// 		fmt.Println("great 2")
+// 	}
 // }

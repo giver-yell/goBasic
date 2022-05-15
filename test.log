@@ -1,2 +1,4 @@
 2021/12/25 09:23:49 /Users/fujiwararyouhei/goBasic/section4.go:22: Exit! open faeifjojdf: no such file or directory
 2021/12/25 09:24:28 /Users/fujiwararyouhei/goBasic/section4.go:22: Exit! open faeifjojdf: no such file or directory
+2022/05/14 16:20:09 main.go:25: Exit open aaa: no such file or directory
+2022/05/14 16:21:14 /Users/fujiwararyouhei/goBasic/main.go:25: Exit open aaa: no such file or directory
