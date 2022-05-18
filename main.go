@@ -1,50 +1,90 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 /* セクション6: Structオリエンテッド */
 
-// 41.Embedded
-type Vertex struct {
-	x, y int
+// 43.インターフェースとダックタイピング
+type Human interface {
+	Say() string
 }
 
-func (v Vertex) Area() int {
-	return v.x * v.y
+type Person struct {
+	Name string
 }
 
-func (v *Vertex) Scale(i int) {
-	v.x = v.x * i
-	v.y = v.y * i
+type Dog struct {
+	Name string
 }
 
-type Vertex3D struct {
-	Vertex
-	z int
+func (p *Person) Say() string {
+	p.Name = "Mr." + p.Name
+	fmt.Println(p.Name)
+	return p.Name
 }
 
-func (v Vertex3D) Area3D() int {
-	return v.x * v.y * v.z
-}
-
-// ポインタレシーバ
-func (v *Vertex3D) Scale3D(i int) {
-	v.x = v.x * i
-	v.y = v.y * i
-	v.z = v.z * i
-}
-
-func New(x, y, z int) *Vertex3D {
-	return &Vertex3D{Vertex{x, y}, z}
+func DriveCar(human Human) {
+	if human.Say() == "Mr.Mike" {
+		fmt.Println("run")
+	} else {
+		fmt.Println("Get out")
+	}
 }
 
 func main() {
-	v := New(3, 4, 5)
-	// v.Scale(10)
-	fmt.Println(v.Area())
-	v.Scale3D(10)
-	fmt.Println(v.Area3D())
+	var mike Human = &Person{"Mike"}
+	var x Human = &Person{"x"}
+	// mike.Say()
+	DriveCar(mike)
+	DriveCar(x)
+	// DriveCar(Dog)
 }
+
+// 42.non-structのメソッド
+// あまり使わないのでスキップ
+
+// 41.Embedded
+// type Vertex struct {
+// 	x, y int
+// }
+
+// func (v Vertex) Area() int {
+// 	return v.x * v.y
+// }
+
+// func (v *Vertex) Scale(i int) {
+// 	v.x = v.x * i
+// 	v.y = v.y * i
+// }
+
+// type Vertex3D struct {
+// 	Vertex
+// 	z int
+// }
+
+// func (v Vertex3D) Area3D() int {
+// 	return v.x * v.y * v.z
+// }
+
+// func (v *Vertex3D) Scale3D(i int) {
+// 	v.x = v.x * i
+// 	v.y = v.y * i
+// 	v.z = v.z * i
+// }
+
+// func New(x, y, z int) *Vertex3D {
+// 	return &Vertex3D{Vertex{x, y}, z}
+// }
+
+// func main() {
+// 	v := New(3, 4, 5)
+// 	// v.Scale(10)
+// 	fmt.Println(v.Area())
+// 	v.Scale3D(10)
+// 	fmt.Println(v.Area3D())
+// }
 
 // 40.コンストラクタ
 // type Vertex struct {
