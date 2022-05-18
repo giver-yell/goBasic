@@ -1,46 +1,70 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 /* セクション6: Structオリエンテッド */
 
-// 43.インターフェースとダックタイピング
-type Human interface {
-	Say() string
-}
-
-type Person struct {
-	Name string
-}
-
-type Dog struct {
-	Name string
-}
-
-func (p *Person) Say() string {
-	p.Name = "Mr." + p.Name
-	fmt.Println(p.Name)
-	return p.Name
-}
-
-func DriveCar(human Human) {
-	if human.Say() == "Mr.Mike" {
-		fmt.Println("run")
-	} else {
-		fmt.Println("Get out")
+// 44.タイプアサーションとswich type文
+// どの型でもOK
+func do(i interface{}) {
+	/*
+		ii := i.(int)
+		ii *= 2
+		fmt.Println(ii)
+	*/
+	switch v := i.(type) {
+	case int:
+		fmt.Println(v * 2)
+	case string:
+		fmt.Println(v + "!")
+	default:
+		fmt.Printf("I don't know %T\n", v)
 	}
 }
 
 func main() {
-	var mike Human = &Person{"Mike"}
-	var x Human = &Person{"x"}
-	// mike.Say()
-	DriveCar(mike)
-	DriveCar(x)
-	// DriveCar(Dog)
+	// var i interface{} = 10
+	// do(i)
+	do(10)
+	do("Mike")
+	do(true)
 }
+
+// 43.インターフェースとダックタイピング
+// type Human interface {
+// 	Say() string
+// }
+
+// type Person struct {
+// 	Name string
+// }
+
+// type Dog struct {
+// 	Name string
+// }
+
+// func (p *Person) Say() string {
+// 	p.Name = "Mr." + p.Name
+// 	fmt.Println(p.Name)
+// 	return p.Name
+// }
+
+// func DriveCar(human Human) {
+// 	if human.Say() == "Mr.Mike" {
+// 		fmt.Println("run")
+// 	} else {
+// 		fmt.Println("Get out")
+// 	}
+// }
+
+// func main() {
+// 	var mike Human = &Person{"Mike"}
+// 	var x Human = &Person{"x"}
+// 	// mike.Say()
+// 	DriveCar(mike)
+// 	DriveCar(x)
+// 	// DriveCar(Dog)
+// }
 
 // 42.non-structのメソッド
 // あまり使わないのでスキップ
