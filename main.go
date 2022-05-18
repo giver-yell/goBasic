@@ -4,31 +4,46 @@ import "fmt"
 
 /* セクション6: Structオリエンテッド */
 
-// 44.タイプアサーションとswich type文
-// どの型でもOK
-func do(i interface{}) {
-	/*
-		ii := i.(int)
-		ii *= 2
-		fmt.Println(ii)
-	*/
-	switch v := i.(type) {
-	case int:
-		fmt.Println(v * 2)
-	case string:
-		fmt.Println(v + "!")
-	default:
-		fmt.Printf("I don't know %T\n", v)
-	}
+// 45.Stringer
+type Person struct {
+	Name string
+	Age  int
+}
+
+func (p Person) String() string {
+	return fmt.Sprintf("My name is %v.", p.Name)
 }
 
 func main() {
-	// var i interface{} = 10
-	// do(i)
-	do(10)
-	do("Mike")
-	do(true)
+	mike := Person{"Mike", 20}
+	fmt.Println(mike)
 }
+
+// 44.タイプアサーションとswich type文
+// どの型でもOK
+// func do(i interface{}) {
+// 	/*
+// 		ii := i.(int)
+// 		ii *= 2
+// 		fmt.Println(ii)
+// 	*/
+// 	switch v := i.(type) {
+// 	case int:
+// 		fmt.Println(v * 2)
+// 	case string:
+// 		fmt.Println(v + "!")
+// 	default:
+// 		fmt.Printf("I don't know %T\n", v)
+// 	}
+// }
+
+// func main() {
+// 	// var i interface{} = 10
+// 	// do(i)
+// 	do(10)
+// 	do("Mike")
+// 	do(true)
+// }
 
 // 43.インターフェースとダックタイピング
 // type Human interface {
