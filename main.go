@@ -4,20 +4,44 @@ import "fmt"
 
 /* セクション6: Structオリエンテッド */
 
-// 45.Stringer
-type Person struct {
-	Name string
-	Age  int
+// 46.カスタムエラー
+type UserNotFound struct {
+	UserName string
 }
 
-func (p Person) String() string {
-	return fmt.Sprintf("My name is %v.", p.Name)
+func (e *UserNotFound) Error() string {
+	return fmt.Sprintf("User not found: %v", e.UserName)
+}
+
+func myFunc() error {
+	// something wrong
+	ok := false
+	if ok {
+		return nil
+	}
+	return &UserNotFound{UserName: "Mike"}
 }
 
 func main() {
-	mike := Person{"Mike", 20}
-	fmt.Println(mike)
+	if err := myFunc(); err != nil {
+		fmt.Println(err)
+	}
 }
+
+// 45.Stringer
+// type Person struct {
+// 	Name string
+// 	Age  int
+// }
+
+// func (p Person) String() string {
+// 	return fmt.Sprintf("My name is %v.", p.Name)
+// }
+
+// func main() {
+// 	mike := Person{"Mike", 20}
+// 	fmt.Println(mike)
+// }
 
 // 44.タイプアサーションとswich type文
 // どの型でもOK
