@@ -4,29 +4,93 @@ import "fmt"
 
 /* セクション6: Structオリエンテッド */
 
-// 46.カスタムエラー
-type UserNotFound struct {
-	UserName string
+/*
+演習
+Q1. 以下に、7と表示されるメソッドを作成してください。
+
+package main
+
+import (
+    "fmt"
+)
+
+type Vertex struct{
+    X, Y int
 }
 
-func (e *UserNotFound) Error() string {
-	return fmt.Sprintf("User not found: %v", e.UserName)
+func main(){
+    v := Vertex{3, 4}
+    fmt.Println(v.Plus())
+}
+Q2 X is 3! Y is 4! と表示されるStringerを作成してください。
+
+package main
+
+import (
+    "fmt"
+)
+
+type Vertex struct{
+    X, Y int
 }
 
-func myFunc() error {
-	// something wrong
-	ok := false
-	if ok {
-		return nil
-	}
-	return &UserNotFound{UserName: "Mike"}
+func main(){
+    v := Vertex{3, 4}
+    fmt.Println(v)
+}
+*/
+
+// Q.1
+// type Vertex struct {
+// 	X, Y int
+// }
+
+// func (v Vertex) Plus() int {
+// 	return v.X + v.Y
+// }
+
+// func main() {
+// 	v := Vertex{3, 4}
+// 	fmt.Println(v.Plus())
+// }
+
+// Q.2
+type Vertex struct {
+	X, Y int
+}
+
+func (v Vertex) String() string {
+	return fmt.Sprintf("X is %d! Y is %d!", v.X, v.Y)
 }
 
 func main() {
-	if err := myFunc(); err != nil {
-		fmt.Println(err)
-	}
+	v := Vertex{3, 4}
+	fmt.Println(v)
 }
+
+// 46.カスタムエラー
+// type UserNotFound struct {
+// 	UserName string
+// }
+
+// func (e *UserNotFound) Error() string {
+// 	return fmt.Sprintf("User not found: %v", e.UserName)
+// }
+
+// func myFunc() error {
+// 	// something wrong
+// 	ok := false
+// 	if ok {
+// 		return nil
+// 	}
+// 	return &UserNotFound{UserName: "Mike"}
+// }
+
+// func main() {
+// 	if err := myFunc(); err != nil {
+// 		fmt.Println(err)
+// 	}
+// }
 
 // 45.Stringer
 // type Person struct {
@@ -109,6 +173,7 @@ func main() {
 // あまり使わないのでスキップ
 
 // 41.Embedded
+// 継承の代わり
 // type Vertex struct {
 // 	x, y int
 // }
