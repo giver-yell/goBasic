@@ -2,235 +2,269 @@ package main
 
 import "fmt"
 
-/* ステートメント */
+/* セクション6: Structオリエンテッド */
 
-// 演習
 /*
-Q1 . 以下のスライスから一番小さい数を探して出力するコードを書いてください。
+演習
+Q1. 以下に、7と表示されるメソッドを作成してください。
 
-l := []int{100, 300, 23, 11, 23, 2, 4, 6, 4}
+package main
 
-Q2. 以下の果物の価格の合計を出力するコードを書いてください。
+import (
+    "fmt"
+)
 
-m := map[string]int{
-    "apple":  200,
-    "banana": 300,
-    "grapes": 150,
-    "orange": 80,
-    "papaya": 500,
-    "kiwi":   90,
+type Vertex struct{
+    X, Y int
+}
+
+func main(){
+    v := Vertex{3, 4}
+    fmt.Println(v.Plus())
+}
+Q2 X is 3! Y is 4! と表示されるStringerを作成してください。
+
+package main
+
+import (
+    "fmt"
+)
+
+type Vertex struct{
+    X, Y int
+}
+
+func main(){
+    v := Vertex{3, 4}
+    fmt.Println(v)
 }
 */
-func main() {
-	// Q1
-	l := []int{100, 300, 23, 11, 23, 2, 4, 6, 4}
-	var min int
 
-	for k, num := range l {
-		if k == 0 {
-			min = num
-			continue
-		}
-		if min > num {
-			min = num
-		}
-	}
-	fmt.Println(min)
+// Q.1
+// type Vertex struct {
+// 	X, Y int
+// }
 
-	// Q2
-	m := map[string]int{
-		"apple":  200,
-		"banana": 300,
-		"grapes": 150,
-		"orange": 80,
-		"papaya": 500,
-		"kiwi":   90,
-	}
+// func (v Vertex) Plus() int {
+// 	return v.X + v.Y
+// }
 
-	sum := 0
-	for _, v := range m {
-		sum += v
-	}
-	fmt.Println(sum)
+// func main() {
+// 	v := Vertex{3, 4}
+// 	fmt.Println(v.Plus())
+// }
+
+// Q.2
+type Vertex struct {
+	X, Y int
 }
 
-// 31. panicとrecover
-// 例外処理。Golangでは、30.エラーハンドリングが推奨されているので基本的には使用しない
+func (v Vertex) String() string {
+	return fmt.Sprintf("X is %d! Y is %d!", v.X, v.Y)
+}
 
-// 30.エラーハンドリング
-// func main() {
-// 	file, err := os.Open("./main.go")
-// 	if err != nil {
-// 		log.Fatalln("Error")
-// 	}
-// 	defer file.Close()
-// 	data := make([]byte, 100)
-// 	count, err := file.Read(data)
-// 	if err != nil {
-// 		log.Fatalln("Error")
-// 	}
-// 	fmt.Println(count, string(data))
+func main() {
+	v := Vertex{3, 4}
+	fmt.Println(v)
+}
+
+// 46.カスタムエラー
+// type UserNotFound struct {
+// 	UserName string
 // }
 
-// 29.log
-// func LoggingSettings(logFile string) {
-// 	logfile, _ := os.OpenFile(logFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-// 	multiLogFile := io.MultiWriter(os.Stdout, logfile)
-// 	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
-// 	// log.SetFlags(log.Ldate | log.Ltime | log.Llongfile)
-// 	log.SetOutput(multiLogFile)
+// func (e *UserNotFound) Error() string {
+// 	return fmt.Sprintf("User not found: %v", e.UserName)
 // }
 
-// func main() {
-// 	LoggingSettings("test.log")
-
-// 	_, err := os.Open("aaa")
-// 	if err != nil {
-// 		log.Fatalln("Exit", err)
+// func myFunc() error {
+// 	// something wrong
+// 	ok := false
+// 	if ok {
+// 		return nil
 // 	}
-
-// 	log.Println("loggint")
-// 	log.Printf("%T %v", "test", "test")
-
-// 	// fatalはexitされる
-// 	log.Fatalf("%T %v", "test", "test")
-// 	log.Fatalln("error!")
-
-// 	fmt.Println("ok")
-// }
-
-// 28.defer
-// func foo() {
-// 	defer fmt.Println("world foo")
-
-// 	fmt.Println("hello foo")
+// 	return &UserNotFound{UserName: "Mike"}
 // }
 
 // func main() {
+// 	if err := myFunc(); err != nil {
+// 		fmt.Println(err)
+// 	}
+// }
+
+// 45.Stringer
+// type Person struct {
+// 	Name string
+// 	Age  int
+// }
+
+// func (p Person) String() string {
+// 	return fmt.Sprintf("My name is %v.", p.Name)
+// }
+
+// func main() {
+// 	mike := Person{"Mike", 20}
+// 	fmt.Println(mike)
+// }
+
+// 44.タイプアサーションとswich type文
+// どの型でもOK
+// func do(i interface{}) {
 // 	/*
-// 		defer fmt.Println("world")
-
-// 		foo()
-
-// 		fmt.Println("HELLO")
+// 		ii := i.(int)
+// 		ii *= 2
+// 		fmt.Println(ii)
 // 	*/
-// 	/*
-// 		fmt.Println("run")
-// 		defer fmt.Println(1)
-// 		defer fmt.Println(2)
-// 		defer fmt.Println(3)
-// 		fmt.Println("succsess")
-// 	*/
-// 	file, _ := os.Open("./main.go")
-// 	defer file.Close()
-// 	data := make([]byte, 100)
-// 	file.Read(data)
-// 	fmt.Println(string(data))
-// }
-
-// 27.switch
-// func getOsName() string {
-// 	return "aj"
-// }
-
-// func main() {
-// 	// os := getOsName()
-// 	switch os := getOsName(); os {
-// 	case "mac":
-// 		fmt.Println("mac")
-// 	case "windows":
-// 		fmt.Println("windows")
+// 	switch v := i.(type) {
+// 	case int:
+// 		fmt.Println(v * 2)
+// 	case string:
+// 		fmt.Println(v + "!")
 // 	default:
-// 		fmt.Println("default", os)
-// 	}
-
-// 	t := time.Now()
-// 	fmt.Println(t)
-// 	fmt.Println(t.Hour())
-// 	switch {
-// 	case t.Hour() < 12:
-// 		fmt.Println("morning")
-// 	case t.Hour() < 17:
-// 		fmt.Println("afternoon")
+// 		fmt.Printf("I don't know %T\n", v)
 // 	}
 // }
 
-// 26.range
 // func main() {
-// 	l := []string{"python", "go", "java"}
-
-// 	for i := 0; i < len(l); i++ {
-// 		fmt.Println(i, l[i])
-// 	}
-
-// 	// foreachの代わり
-// 	for i, v := range l {
-// 		fmt.Println(i, v)
-// 	}
-
-// 	for _, v := range l {
-// 		fmt.Println(v)
-// 	}
-
-// 	// map
-// 	m := map[string]int{"apple": 100, "banana": 200}
-
-// 	for k, v := range m {
-// 		fmt.Println(k, v)
-// 	}
-// 	for k := range m {
-// 		fmt.Println(k)
-// 	}
-// 	for _, v := range m {
-// 		fmt.Println(v)
-// 	}
+// 	// var i interface{} = 10
+// 	// do(i)
+// 	do(10)
+// 	do("Mike")
+// 	do(true)
 // }
 
-// 25.for
-// func main() {
-// 	for i := 0; i < 10; i++ {
-// 		if i == 3 {
-// 			fmt.Println("continue")
-// 			continue
-// 		}
-
-// 		if i > 5 {
-// 			fmt.Println("break")
-// 			break
-// 		}
-// 		fmt.Println(i)
-// 	}
-
-// 	sum := 1
-// 	// for ; sum < 10 {
-// 	for sum < 10 {
-// 		sum += sum
-// 		fmt.Println(sum)
-// 	}
-// 	fmt.Println(sum)
-
-// 	// 無限ループ
-// 	for {
-// 		fmt.Println("hello")
-// 	}
+// 43.インターフェースとダックタイピング
+// type Human interface {
+// 	Say() string
 // }
 
-// 24.if
-// func by2(num int) string {
-// 	if num%2 == 0 {
-// 		return "ok"
+// type Person struct {
+// 	Name string
+// }
+
+// type Dog struct {
+// 	Name string
+// }
+
+// func (p *Person) Say() string {
+// 	p.Name = "Mr." + p.Name
+// 	fmt.Println(p.Name)
+// 	return p.Name
+// }
+
+// func DriveCar(human Human) {
+// 	if human.Say() == "Mr.Mike" {
+// 		fmt.Println("run")
 // 	} else {
-// 		return "no"
+// 		fmt.Println("Get out")
 // 	}
 // }
 
 // func main() {
-// 	result := by2(10)
-// 	if result == "ok" {
-// 		fmt.Println("great")
-// 	}
+// 	var mike Human = &Person{"Mike"}
+// 	var x Human = &Person{"x"}
+// 	// mike.Say()
+// 	DriveCar(mike)
+// 	DriveCar(x)
+// 	// DriveCar(Dog)
+// }
 
-// 	if result2 := by2(10); result2 == "ok" {
-// 		fmt.Println("great 2")
-// 	}
+// 42.non-structのメソッド
+// あまり使わないのでスキップ
+
+// 41.Embedded
+// 継承の代わり
+// type Vertex struct {
+// 	x, y int
+// }
+
+// func (v Vertex) Area() int {
+// 	return v.x * v.y
+// }
+
+// func (v *Vertex) Scale(i int) {
+// 	v.x = v.x * i
+// 	v.y = v.y * i
+// }
+
+// type Vertex3D struct {
+// 	Vertex
+// 	z int
+// }
+
+// func (v Vertex3D) Area3D() int {
+// 	return v.x * v.y * v.z
+// }
+
+// func (v *Vertex3D) Scale3D(i int) {
+// 	v.x = v.x * i
+// 	v.y = v.y * i
+// 	v.z = v.z * i
+// }
+
+// func New(x, y, z int) *Vertex3D {
+// 	return &Vertex3D{Vertex{x, y}, z}
+// }
+
+// func main() {
+// 	v := New(3, 4, 5)
+// 	// v.Scale(10)
+// 	fmt.Println(v.Area())
+// 	v.Scale3D(10)
+// 	fmt.Println(v.Area3D())
+// }
+
+// 40.コンストラクタ
+// type Vertex struct {
+// 	x, y int
+// }
+
+// // 値レシーバ
+// func (v Vertex) Area() int {
+// 	return v.x * v.y
+// }
+
+// // ポインタレシーバ
+// func (v *Vertex) Scale(i int) {
+// 	v.x = v.x * i
+// 	v.y = v.y * i
+// }
+
+// func New(x, y int) *Vertex {
+// 	return &Vertex{x, y}
+// }
+
+// func main() {
+// 	v := New(3, 4)
+// 	v.Scale(10)
+// 	fmt.Println(v.Area())
+// }
+
+// 39.ポインタレシーバと値レシーバ
+// type Vertex struct {
+// 	X, Y int
+// }
+
+// // 値レシーバ
+// func (v Vertex) Area() int {
+// 	return v.X * v.Y
+// }
+
+// // ポインタレシーバ
+// func (v *Vertex) Scale(i int) {
+// 	v.X = v.X * i
+// 	v.Y = v.Y * i
+// }
+
+// func Area(v Vertex) int {
+// 	return v.X * v.Y
+// }
+
+// func main() {
+// 	v := Vertex{3, 4}
+// 	// fmt.Println(Area(v))
+// 	// object orientedと同様なことがgolagでもできる
+// 	// v.を入力すると、補完でArea()が出てくるので便利
+// 	v.Scale(10)
+// 	fmt.Println(v.Area())
 // }
