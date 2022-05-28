@@ -1,25 +1,64 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+	"time"
+)
 
-// 52.channelのrangeとclose
-func goroutine1(s []int, c chan int) {
-	sum := 0
-	for _, v := range s {
-		sum += v
-		c <- sum
+// 53.producerとconsumer
+func producer(ch chan int, i int) {
+	// something
+	ch <- i * 2
+}
+
+func consumer(ch chan int, wg *sync.WaitGroup) {
+	for i := range ch {
+		func() {
+			defer wg.Done()
+			fmt.Println("process", i*1000)
+		}()
 	}
-	close(c)
+	fmt.Println("######")
+
 }
 
 func main() {
-	s := []int{1, 2, 3, 4, 5}
-	c := make(chan int, len(s))
-	go goroutine1(s, c)
-	for i := range c {
-		fmt.Println(i)
+	var wg sync.WaitGroup
+	ch := make(chan int)
+
+	// producer
+	for i := 0; i < 10; i++ {
+		wg.Add(1)
+		go producer(ch, i)
 	}
+
+	// consumer
+	go consumer(ch, &wg)
+	wg.Wait()
+	close(ch)
+	time.Sleep(2 * time.Second)
+	fmt.Println("Done")
 }
+
+// 52.channelのrangeとclose
+// func goroutine1(s []int, c chan int) {
+// 	sum := 0
+// 	for _, v := range s {
+// 		sum += v
+// 		c <- sum
+// 	}
+// 	close(c)
+// }
+
+// func main() {
+// 	s := []int{1, 2, 3, 4, 5}
+// 	c := make(chan int, len(s))
+// 	go goroutine1(s, c)
+// 	for i := range c {
+// 		fmt.Println(i)
+// 	}
+// }
 
 // 51.Buffered Channels
 // func main() {
