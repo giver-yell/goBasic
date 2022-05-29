@@ -2,269 +2,293 @@ package main
 
 import "fmt"
 
-/* セクション6: Structオリエンテッド */
-
 /*
 演習
-Q1. 以下に、7と表示されるメソッドを作成してください。
+Q1. 以下のように文字列を連結させて出力したいコードがありますが、
+
+test1!
+test1!test2!
+test1!test2!test3!
+test1!test2!test3!test4!
+以下のコードには間違いがあります。上記の出力になるように修正してください。
 
 package main
 
-import (
-    "fmt"
-)
+import "fmt"
 
-type Vertex struct{
-    X, Y int
+func goroutine(s []string, c chan int){
+    sum := ""
+    for _, v := range s{
+        sum += v
+        c <- sum
+    }
 }
 
 func main(){
-    v := Vertex{3, 4}
-    fmt.Println(v.Plus())
-}
-Q2 X is 3! Y is 4! と表示されるStringerを作成してください。
-
-package main
-
-import (
-    "fmt"
-)
-
-type Vertex struct{
-    X, Y int
-}
-
-func main(){
-    v := Vertex{3, 4}
-    fmt.Println(v)
+    words := []string{"test1!", "test2!", "test3!", "test4!"}
+    c := make(chan int)
+    go goroutine(words, c)
+    for w := range c{
+        fmt.Println(w)
+    }
 }
 */
 
-// Q.1
-// type Vertex struct {
-// 	X, Y int
-// }
-
-// func (v Vertex) Plus() int {
-// 	return v.X + v.Y
-// }
-
-// func main() {
-// 	v := Vertex{3, 4}
-// 	fmt.Println(v.Plus())
-// }
-
-// Q.2
-type Vertex struct {
-	X, Y int
-}
-
-func (v Vertex) String() string {
-	return fmt.Sprintf("X is %d! Y is %d!", v.X, v.Y)
+func goroutine(s []string, c chan string) {
+	defer close(c)
+	sum := ""
+	for _, v := range s {
+		sum += v
+		c <- sum
+	}
 }
 
 func main() {
-	v := Vertex{3, 4}
-	fmt.Println(v)
+	words := []string{"test1!", "test2!", "test3!", "test4!"}
+	c := make(chan string)
+	go goroutine(words, c)
+	for w := range c {
+		fmt.Println(w)
+	}
 }
 
-// 46.カスタムエラー
-// type UserNotFound struct {
-// 	UserName string
+// 57.sync.Mutex
+// type Counter struct {
+// 	v   map[string]int
+// 	mux sync.Mutex
 // }
 
-// func (e *UserNotFound) Error() string {
-// 	return fmt.Sprintf("User not found: %v", e.UserName)
+// func (c *Counter) Inc(key string) {
+// 	c.mux.Lock()
+// 	defer c.mux.Unlock()
+// 	c.v[key]++
 // }
 
-// func myFunc() error {
-// 	// something wrong
-// 	ok := false
-// 	if ok {
-// 		return nil
-// 	}
-// 	return &UserNotFound{UserName: "Mike"}
-// }
-
-// func main() {
-// 	if err := myFunc(); err != nil {
-// 		fmt.Println(err)
-// 	}
-// }
-
-// 45.Stringer
-// type Person struct {
-// 	Name string
-// 	Age  int
-// }
-
-// func (p Person) String() string {
-// 	return fmt.Sprintf("My name is %v.", p.Name)
+// func (c *Counter) Value(key string) int {
+// 	c.mux.Lock()
+// 	defer c.mux.Unlock()
+// 	return c.v[key]
 // }
 
 // func main() {
-// 	mike := Person{"Mike", 20}
-// 	fmt.Println(mike)
+// 	c := Counter{v: make(map[string]int)}
+// 	go func() {
+// 		for i := 0; i < 10; i++ {
+// 			c.Inc("Key")
+// 		}
+// 	}()
+// 	go func() {
+// 		for i := 0; i < 10; i++ {
+// 			c.Inc("Key")
+// 		}
+// 	}()
+// 	time.Sleep(1 * time.Second)
+// 	fmt.Println(c, c.Value("Key"))
 // }
 
-// 44.タイプアサーションとswich type文
-// どの型でもOK
-// func do(i interface{}) {
-// 	/*
-// 		ii := i.(int)
-// 		ii *= 2
-// 		fmt.Println(ii)
-// 	*/
-// 	switch v := i.(type) {
-// 	case int:
-// 		fmt.Println(v * 2)
-// 	case string:
-// 		fmt.Println(v + "!")
-// 	default:
-// 		fmt.Printf("I don't know %T\n", v)
+// 56.Default Selection と for break
+// func main() {
+// 	tick := time.Tick(100 * time.Millisecond)
+// 	boom := time.After(500 * time.Millisecond)
+// OuterLoop:
+// 	for {
+// 		select {
+// 		case t := <-tick:
+// 			fmt.Println("tick", t)
+// 		case b := <-boom:
+// 			fmt.Println("Boom!", b)
+// 			break OuterLoop
+// 		default:
+// 			fmt.Println("   .")
+// 			time.Sleep(50 * time.Millisecond)
+// 		}
+// 	}
+// 	fmt.Println("########")
+// }
+
+// 55.channelとselect
+// func goroutine1(ch chan string) {
+// 	for {
+// 		ch <- "packet from 1"
+// 		time.Sleep(3 * time.Second)
 // 	}
 // }
 
-// func main() {
-// 	// var i interface{} = 10
-// 	// do(i)
-// 	do(10)
-// 	do("Mike")
-// 	do(true)
-// }
-
-// 43.インターフェースとダックタイピング
-// type Human interface {
-// 	Say() string
-// }
-
-// type Person struct {
-// 	Name string
-// }
-
-// type Dog struct {
-// 	Name string
-// }
-
-// func (p *Person) Say() string {
-// 	p.Name = "Mr." + p.Name
-// 	fmt.Println(p.Name)
-// 	return p.Name
-// }
-
-// func DriveCar(human Human) {
-// 	if human.Say() == "Mr.Mike" {
-// 		fmt.Println("run")
-// 	} else {
-// 		fmt.Println("Get out")
+// func goroutine2(ch chan int) {
+// 	for {
+// 		ch <- 100
+// 		time.Sleep(1 * time.Second)
 // 	}
 // }
 
 // func main() {
-// 	var mike Human = &Person{"Mike"}
-// 	var x Human = &Person{"x"}
-// 	// mike.Say()
-// 	DriveCar(mike)
-// 	DriveCar(x)
-// 	// DriveCar(Dog)
+// 	c1 := make(chan string)
+// 	c2 := make(chan int)
+// 	go goroutine1(c1)
+// 	go goroutine2(c2)
+
+// 	for {
+// 		select {
+// 		case msg1 := <-c1:
+// 			fmt.Println(msg1)
+// 		case msg2 := <-c2:
+// 			fmt.Println(msg2)
+// 		}
+// 	}
 // }
 
-// 42.non-structのメソッド
-// あまり使わないのでスキップ
-
-// 41.Embedded
-// 継承の代わり
-// type Vertex struct {
-// 	x, y int
+// 54.fan-out fan-in
+// func producer(first chan int) {
+// 	defer close(first)
+// 	for i := 0; i < 10; i++ {
+// 		first <- i
+// 	}
 // }
 
-// func (v Vertex) Area() int {
-// 	return v.x * v.y
+// func multi2(first <-chan int, second chan<- int) {
+// 	defer close(second)
+// 	for i := range first {
+// 		second <- i * 2
+// 	}
 // }
 
-// func (v *Vertex) Scale(i int) {
-// 	v.x = v.x * i
-// 	v.y = v.y * i
-// }
-
-// type Vertex3D struct {
-// 	Vertex
-// 	z int
-// }
-
-// func (v Vertex3D) Area3D() int {
-// 	return v.x * v.y * v.z
-// }
-
-// func (v *Vertex3D) Scale3D(i int) {
-// 	v.x = v.x * i
-// 	v.y = v.y * i
-// 	v.z = v.z * i
-// }
-
-// func New(x, y, z int) *Vertex3D {
-// 	return &Vertex3D{Vertex{x, y}, z}
+// func multi4(second <-chan int, third chan<- int) {
+// 	defer close(third)
+// 	for i := range second {
+// 		third <- i * 4
+// 	}
 // }
 
 // func main() {
-// 	v := New(3, 4, 5)
-// 	// v.Scale(10)
-// 	fmt.Println(v.Area())
-// 	v.Scale3D(10)
-// 	fmt.Println(v.Area3D())
+// 	first := make(chan int)
+// 	second := make(chan int)
+// 	third := make(chan int)
+
+// 	go producer(first)
+// 	go multi2(first, second)
+// 	go multi4(second, third)
+// 	for i := range third {
+// 		fmt.Println(i)
+// 	}
 // }
 
-// 40.コンストラクタ
-// type Vertex struct {
-// 	x, y int
+// 53.producerとconsumer
+// func producer(ch chan int, i int) {
+// 	// something
+// 	ch <- i * 2
 // }
 
-// // 値レシーバ
-// func (v Vertex) Area() int {
-// 	return v.x * v.y
-// }
+// func consumer(ch chan int, wg *sync.WaitGroup) {
+// 	for i := range ch {
+// 		func() {
+// 			defer wg.Done()
+// 			fmt.Println("process", i*1000)
+// 		}()
+// 	}
+// 	fmt.Println("######")
 
-// // ポインタレシーバ
-// func (v *Vertex) Scale(i int) {
-// 	v.x = v.x * i
-// 	v.y = v.y * i
-// }
-
-// func New(x, y int) *Vertex {
-// 	return &Vertex{x, y}
-// }
-
-// func main() {
-// 	v := New(3, 4)
-// 	v.Scale(10)
-// 	fmt.Println(v.Area())
-// }
-
-// 39.ポインタレシーバと値レシーバ
-// type Vertex struct {
-// 	X, Y int
-// }
-
-// // 値レシーバ
-// func (v Vertex) Area() int {
-// 	return v.X * v.Y
-// }
-
-// // ポインタレシーバ
-// func (v *Vertex) Scale(i int) {
-// 	v.X = v.X * i
-// 	v.Y = v.Y * i
-// }
-
-// func Area(v Vertex) int {
-// 	return v.X * v.Y
 // }
 
 // func main() {
-// 	v := Vertex{3, 4}
-// 	// fmt.Println(Area(v))
-// 	// object orientedと同様なことがgolagでもできる
-// 	// v.を入力すると、補完でArea()が出てくるので便利
-// 	v.Scale(10)
-// 	fmt.Println(v.Area())
+// 	var wg sync.WaitGroup
+// 	ch := make(chan int)
+
+// 	// producer
+// 	for i := 0; i < 10; i++ {
+// 		wg.Add(1)
+// 		go producer(ch, i)
+// 	}
+
+// 	// consumer
+// 	go consumer(ch, &wg)
+// 	wg.Wait()
+// 	close(ch)
+// 	time.Sleep(2 * time.Second)
+// 	fmt.Println("Done")
+// }
+
+// 52.channelのrangeとclose
+// func goroutine1(s []int, c chan int) {
+// 	sum := 0
+// 	for _, v := range s {
+// 		sum += v
+// 		c <- sum
+// 	}
+// 	close(c)
+// }
+
+// func main() {
+// 	s := []int{1, 2, 3, 4, 5}
+// 	c := make(chan int, len(s))
+// 	go goroutine1(s, c)
+// 	for i := range c {
+// 		fmt.Println(i)
+// 	}
+// }
+
+// 51.Buffered Channels
+// func main() {
+// 	ch := make(chan int, 2)
+// 	ch <- 100
+// 	fmt.Println(len(ch))
+// 	ch <- 200
+// 	fmt.Println(len(ch))
+// 	// ループする場合は、chの終わりを宣言しておく必要がある
+// 	close(ch)
+
+// 	for c := range ch {
+// 		fmt.Println(c)
+// 	}
+// }
+
+// 50.channel
+// func goroutine1(s []int, c chan int) {
+// 	sum := 0
+// 	for _, v := range s {
+// 		sum += v
+// 	}
+// 	c <- sum
+// }
+
+// func goroutine2(s []int, c chan int) {
+// 	sum := 0
+// 	for _, v := range s {
+// 		sum += v
+// 	}
+// 	c <- sum
+// }
+
+// func main() {
+// 	s := []int{1, 2, 3, 4, 5}
+// 	c := make(chan int) // 15, 15
+// 	go goroutine1(s, c)
+// 	go goroutine2(s, c)
+// 	x := <-c
+// 	fmt.Println(x)
+// 	y := <-c
+// 	fmt.Println(y)
+// }
+
+// 49.goroutineとsync.WaitGroup（軽量のスレッド、並列処理）
+// func goroutine(s string, wg *sync.WaitGroup) {
+// 	for i := 0; i < 5; i++ {
+// 		// time.Sleep(100 * time.Millisecond)
+// 		fmt.Println(s)
+// 	}
+// 	wg.Done()
+// }
+// func normal(s string) {
+// 	for i := 0; i < 5; i++ {
+// 		// time.Sleep(100 * time.Millisecond)
+// 		fmt.Println(s)
+// 	}
+// }
+
+// func main() {
+// 	var wg sync.WaitGroup
+// 	wg.Add(1)
+// 	go goroutine("world", &wg)
+// 	normal("hello")
+
+// 	wg.Wait()
 // }
