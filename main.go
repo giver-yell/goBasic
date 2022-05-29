@@ -2,28 +2,63 @@ package main
 
 import (
 	"fmt"
+	"sync"
 	"time"
 )
 
-// 56.Default Selection と for break
-func main() {
-	tick := time.Tick(100 * time.Millisecond)
-	boom := time.After(500 * time.Millisecond)
-OuterLoop:
-	for {
-		select {
-		case t := <-tick:
-			fmt.Println("tick", t)
-		case b := <-boom:
-			fmt.Println("Boom!", b)
-			break OuterLoop
-		default:
-			fmt.Println("   .")
-			time.Sleep(50 * time.Millisecond)
-		}
-	}
-	fmt.Println("########")
+// 57.sync.Mutex
+type Counter struct {
+	v   map[string]int
+	mux sync.Mutex
 }
+
+func (c *Counter) Inc(key string) {
+	c.mux.Lock()
+	defer c.mux.Unlock()
+	c.v[key]++
+}
+
+func (c *Counter) Value(key string) int {
+	c.mux.Lock()
+	defer c.mux.Unlock()
+	return c.v[key]
+}
+
+func main() {
+	c := Counter{v: make(map[string]int)}
+	go func() {
+		for i := 0; i < 10; i++ {
+			c.Inc("Key")
+		}
+	}()
+	go func() {
+		for i := 0; i < 10; i++ {
+			c.Inc("Key")
+		}
+	}()
+	time.Sleep(1 * time.Second)
+	fmt.Println(c, c.Value("Key"))
+}
+
+// 56.Default Selection と for break
+// func main() {
+// 	tick := time.Tick(100 * time.Millisecond)
+// 	boom := time.After(500 * time.Millisecond)
+// OuterLoop:
+// 	for {
+// 		select {
+// 		case t := <-tick:
+// 			fmt.Println("tick", t)
+// 		case b := <-boom:
+// 			fmt.Println("Boom!", b)
+// 			break OuterLoop
+// 		default:
+// 			fmt.Println("   .")
+// 			time.Sleep(50 * time.Millisecond)
+// 		}
+// 	}
+// 	fmt.Println("########")
+// }
 
 // 55.channelとselect
 // func goroutine1(ch chan string) {
