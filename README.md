@@ -16,7 +16,7 @@
 
 ### third party の package インストール
 
-- 株価分析の package  
+- `talib` 株価分析の package  
   `go get github.com/markcheno/go-talib`
 - semaphore  
   `go mod download golang.org/x/sync`  
