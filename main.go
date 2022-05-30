@@ -14,4 +14,8 @@ func main() {
 	mylib2.Say()
 
 	under.Hello()
+
+	// 61.public と private
+	person := mylib2.Person{Name: "Mike", Age: 21}
+	fmt.Println(person)
 }
