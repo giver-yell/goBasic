@@ -2,6 +2,7 @@ package mylib2
 
 import "testing"
 
+// 62.testing
 var Debug bool = true
 
 func TestAverage(t *testing.T) {
