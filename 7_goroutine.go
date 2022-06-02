@@ -1,6 +1,6 @@
-package main
+// package main
 
-import "fmt"
+// import "fmt"
 
 /*
 演習
@@ -34,23 +34,23 @@ func main(){
 }
 */
 
-func goroutine(s []string, c chan string) {
-	defer close(c)
-	sum := ""
-	for _, v := range s {
-		sum += v
-		c <- sum
-	}
-}
+// func goroutine(s []string, c chan string) {
+// 	defer close(c)
+// 	sum := ""
+// 	for _, v := range s {
+// 		sum += v
+// 		c <- sum
+// 	}
+// }
 
-func main() {
-	words := []string{"test1!", "test2!", "test3!", "test4!"}
-	c := make(chan string)
-	go goroutine(words, c)
-	for w := range c {
-		fmt.Println(w)
-	}
-}
+// func main() {
+// 	words := []string{"test1!", "test2!", "test3!", "test4!"}
+// 	c := make(chan string)
+// 	go goroutine(words, c)
+// 	for w := range c {
+// 		fmt.Println(w)
+// 	}
+// }
 
 // 57.sync.Mutex
 // type Counter struct {
