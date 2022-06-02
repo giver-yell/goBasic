@@ -1,4 +1,4 @@
-package main
+// package main
 
 // import (
 // 	"fmt"
@@ -7,20 +7,23 @@ package main
 // "github.com/giver-yell/goBasic/mylib2/under"
 // )
 
-import (
-	"fmt"
+// import (
+// 	"fmt"
 
-	"github.com/markcheno/go-quote"
-	"github.com/markcheno/go-talib"
-)
+// 	"github.com/markcheno/go-quote"
+// 	"github.com/markcheno/go-talib"
+// )
+
+// 65.godoc
+// go doc では `go doc -http:6060` が機能しないので飛ばす
 
 // 64.サードパーティのpackageのインストール
-func main() {
-	spy, _ := quote.NewQuoteFromYahoo("spy", "2016-01-01", "2016-04-01", quote.Daily, true)
-	fmt.Print(spy.CSV())
-	rsi2 := talib.Rsi(spy.Close, 2)
-	fmt.Println(rsi2)
-}
+// func main() {
+// 	spy, _ := quote.NewQuoteFromYahoo("spy", "2016-01-01", "2016-04-01", quote.Daily, true)
+// 	fmt.Print(spy.CSV())
+// 	rsi2 := talib.Rsi(spy.Close, 2)
+// 	fmt.Println(rsi2)
+// }
 
 // 60.package
 // func main() {
