@@ -1,30 +1,44 @@
 package main
 
-import (
-	"fmt"
-	"sort"
-)
+// 70.iota
+// const (
+// 	c1 = iota
+// 	c2
+// 	c3
+// )
+
+// const (
+// 	_      = iota
+// 	KB int = 1 << (10 * iota)
+// 	MB
+// 	GB
+// )
+
+// func main() {
+// 	fmt.Println(c1, c2, c3)
+// 	fmt.Println(KB, MB, GB)
+// }
 
 // 69.Sort
-func main() {
-	i := []int{5, 3, 2, 8, 7}
-	s := []string{"d", "a", "f"}
-	p := []struct {
-		Name string
-		Age  int
-	}{
-		{"Nancy", 20},
-		{"Vera", 40},
-		{"Mike", 30},
-		{"Bob", 50},
-	}
-	fmt.Println(i, s, p)
-	sort.Ints(i)
-	sort.Strings(s)
-	sort.Slice(p, func(i, j int) bool { return p[i].Name < p[j].Name })
-	sort.Slice(p, func(i, j int) bool { return p[i].Age < p[j].Age })
-	fmt.Println(i, s, p)
-}
+// func main() {
+// 	i := []int{5, 3, 2, 8, 7}
+// 	s := []string{"d", "a", "f"}
+// 	p := []struct {
+// 		Name string
+// 		Age  int
+// 	}{
+// 		{"Nancy", 20},
+// 		{"Vera", 40},
+// 		{"Mike", 30},
+// 		{"Bob", 50},
+// 	}
+// 	fmt.Println(i, s, p)
+// 	sort.Ints(i)
+// 	sort.Strings(s)
+// 	sort.Slice(p, func(i, j int) bool { return p[i].Name < p[j].Name })
+// 	sort.Slice(p, func(i, j int) bool { return p[i].Age < p[j].Age })
+// 	fmt.Println(i, s, p)
+// }
 
 // 68.regex
 // func main() {
