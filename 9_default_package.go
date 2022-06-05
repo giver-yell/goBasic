@@ -1,29 +1,29 @@
-package main
+// package main
 
-import (
-	"bytes"
-	"fmt"
-	"io/ioutil"
-)
+// import (
+// 	"bytes"
+// 	"fmt"
+// 	"io/ioutil"
+// )
 
 // 72.ioutil
-func main() {
-	// file読み込み、書き込み
-	// content, err := ioutil.ReadFile("main.go")
-	// if err != nil {
-	// 	log.Fatalln(err)
-	// }
-	// fmt.Println(string(content))
+// func main() {
+// file読み込み、書き込み
+// content, err := ioutil.ReadFile("main.go")
+// if err != nil {
+// 	log.Fatalln(err)
+// }
+// fmt.Println(string(content))
 
-	// if err := ioutil.WriteFile("ioutil_temp2.go", content, 0666); err != nil {
-	// 	log.Fatalln(err)
-	// }
+// if err := ioutil.WriteFile("ioutil_temp2.go", content, 0666); err != nil {
+// 	log.Fatalln(err)
+// }
 
-	r := bytes.NewBuffer([]byte("abc"))
-	content, _ := ioutil.ReadAll(r)
-	fmt.Println(string(content))
+// 	r := bytes.NewBuffer([]byte("abc"))
+// 	content, _ := ioutil.ReadAll(r)
+// 	fmt.Println(string(content))
 
-}
+// }
 
 // 71.context
 // func longProcess(ctx context.Context, ch chan string) {
