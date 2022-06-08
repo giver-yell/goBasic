@@ -1,111 +1,67 @@
 package main
 
 import (
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
 	"fmt"
+
+	"gopkg.in/ini.v1"
 )
 
-// 75.hmac でAPI認証
-var DB = map[string]string{
-	"User1Key": "User1Secret",
-	"User2Key": "User2Secret",
+// 77.iniでConfigの設定ファイルを読み込む
+type ConfigList struct {
+	Port      int
+	DBName    string
+	SQLDriver string
 }
 
-// server
-func Server(apiKey, sign string, data []byte) {
-	apiSecret := DB[apiKey]
-	h := hmac.New(sha256.New, []byte(apiSecret))
-	h.Write(data)
-	expectedHMAC := hex.EncodeToString(h.Sum(nil))
-	fmt.Println(sign == expectedHMAC)
+var Config ConfigList
+
+func init() {
+	cfg, _ := ini.Load("config.ini")
+	Config = ConfigList{
+		// MustInt(): 空なら0が入る
+		Port:   cfg.Section("web").Key("port").MustInt(),
+		DBName: cfg.Section("db").Key("name").MustString("exampe.sql"),
+		// String(): 空なら''が入る
+		SQLDriver: cfg.Section("db").Key("driver").String(),
+	}
 }
 
-// client
 func main() {
-	const apiKey = "User1Key"
-	const apiSecret = "User1Secret"
-
-	data := []byte("data")
-	h := hmac.New(sha256.New, []byte(apiSecret))
-	h.Write(data)
-	sign := hex.EncodeToString(h.Sum(nil))
-
-	fmt.Println(sign)
-
-	Server(apiKey, sign, data)
+	fmt.Printf("%T %v\n", Config.Port, Config.Port)
+	fmt.Printf("%T %v\n", Config.DBName, Config.DBName)
+	fmt.Printf("%T %v\n", Config.SQLDriver, Config.SQLDriver)
 }
 
-// 74.json.Unmarshal と marshal と encode
-// type T struct{}
+// 76.Semaphore
+// 同時にgoroutineが実行できる数を指定
+// var s *semaphore.Weighted = semaphore.NewWeighted(1)
 
-// type Person struct {
-// 	Name      string   `json:"name"`
-// 	Age       int      `json:"age,omitempty"`
-// 	NickNames []string `json:"nicknames"`
-// 	T         *T       `json:"T,omitempty"`
-// }
-
-// // Unmarshalのカスタマイズ
-// func (p *Person) UnmarshalJSON(b []byte) error {
-// 	type Person2 struct {
-// 		Name string
+// func longProcess(ctx context.Context) {
+// 	// 処理待ちのキャンセル
+// 	isAcquire := s.TryAcquire(1)
+// 	if !isAcquire {
+// 		fmt.Println("Could not get lock")
+// 		return
 // 	}
-// 	var p2 Person2
-// 	err := json.Unmarshal(b, &p2)
-// 	if err != nil {
-// 		fmt.Println(err)
-// 	}
-// 	p.Name = p2.Name + "!"
-// 	return err
-// }
+// 	// ロック
+// 	// if err := s.Acquire(ctx, 1); err != nil {
+// 	// 	fmt.Println(err)
+// 	// 	return
+// 	// }
+// 	// リリース
+// 	defer s.Release(1)
 
-// // Marshalのカスタマイズ
-// // func (p Person) MarshalJSON() ([]byte, error) {
-// // 	v, err := json.Marshal(&struct {
-// // 		Name string
-// // 	}{
-// // 		Name: "Mr." + p.Name,
-// // 	})
-// // 	return v, err
-// // }
+// 	fmt.Println("Wait...")
+// 	time.Sleep(1 * time.Second)
+// 	fmt.Println("Done")
+// }
 
 // func main() {
-// 	b := []byte(`{"name":"mike", "age":0,"nicknames":["a","b","c"]}`)
-// 	var p Person
-// 	if err := json.Unmarshal(b, &p); err != nil {
-// 		fmt.Println(err)
-// 	}
-// 	fmt.Println(p.Name, p.Age, p.NickNames)
-
-// 	v, _ := json.Marshal(p)
-// 	fmt.Println(string(v))
-// }
-
-// 73.http
-// func main() {
-// 	// resp, _ := http.Get("http://example.com")
-// 	// defer resp.Body.Close()
-// 	// body, _ := ioutil.ReadAll(resp.Body)
-// 	// fmt.Println(string(body))
-
-// 	base, err := url.Parse("http://example.com/abdeojo")
-// 	reference, _ := url.Parse("/test?a=1&b=2")
-// 	endpoint := base.ResolveReference(reference).String()
-// 	fmt.Println(base, err)
-// 	fmt.Println(endpoint)
-// 	req, _ := http.NewRequest("GET", endpoint, nil)
-// 	// req, _ := http.NewRequest("POST", endpoint, bytes.NewBuffer([]byte("password")))
-// 	req.Header.Add("If-None-Match", `W/"wyzzy"`)
-// 	q := req.URL.Query()
-// 	q.Add("c", "3&%")
-// 	fmt.Println(q)
-// 	fmt.Println(q.Encode())
-// 	req.URL.RawQuery = q.Encode()
-
-// 	var client *http.Client = &http.Client{}
-// 	resp, _ := client.Do(req)
-// 	body, _ := ioutil.ReadAll(resp.Body)
-// 	fmt.Println(string(body))
+// 	ctx := context.TODO()
+// 	go longProcess(ctx)
+// 	go longProcess(ctx)
+// 	go longProcess(ctx)
+// 	time.Sleep(2 * time.Second)
+// 	go longProcess(ctx)
+// 	time.Sleep(5 * time.Second)
 // }
