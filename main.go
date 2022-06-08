@@ -1,146 +1,111 @@
 package main
 
 import (
-	"bytes"
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/hex"
 	"fmt"
-	"io/ioutil"
 )
 
-// 72.ioutil
-func main() {
-	// file読み込み、書き込み
-	// content, err := ioutil.ReadFile("main.go")
-	// if err != nil {
-	// 	log.Fatalln(err)
-	// }
-	// fmt.Println(string(content))
-
-	// if err := ioutil.WriteFile("ioutil_temp2.go", content, 0666); err != nil {
-	// 	log.Fatalln(err)
-	// }
-
-	r := bytes.NewBuffer([]byte("abc"))
-	content, _ := ioutil.ReadAll(r)
-	fmt.Println(string(content))
-
+// 75.hmac でAPI認証
+var DB = map[string]string{
+	"User1Key": "User1Secret",
+	"User2Key": "User2Secret",
 }
 
-// 71.context
-// func longProcess(ctx context.Context, ch chan string) {
-// 	fmt.Println("run")
-// 	time.Sleep(2 * time.Second)
-// 	fmt.Println("finish")
-// 	ch <- "result"
+// server
+func Server(apiKey, sign string, data []byte) {
+	apiSecret := DB[apiKey]
+	h := hmac.New(sha256.New, []byte(apiSecret))
+	h.Write(data)
+	expectedHMAC := hex.EncodeToString(h.Sum(nil))
+	fmt.Println(sign == expectedHMAC)
+}
+
+// client
+func main() {
+	const apiKey = "User1Key"
+	const apiSecret = "User1Secret"
+
+	data := []byte("data")
+	h := hmac.New(sha256.New, []byte(apiSecret))
+	h.Write(data)
+	sign := hex.EncodeToString(h.Sum(nil))
+
+	fmt.Println(sign)
+
+	Server(apiKey, sign, data)
+}
+
+// 74.json.Unmarshal と marshal と encode
+// type T struct{}
+
+// type Person struct {
+// 	Name      string   `json:"name"`
+// 	Age       int      `json:"age,omitempty"`
+// 	NickNames []string `json:"nicknames"`
+// 	T         *T       `json:"T,omitempty"`
 // }
 
-// func main() {
-// 	ch := make(chan string)
-// 	ctx := context.Background()
-// 	ctx, cancel := context.WithTimeout(ctx, 1*time.Second)
-// 	defer cancel()
-// 	go longProcess(ctx, ch)
-
-// CTXLOOP:
-// 	for {
-// 		select {
-// 		case <-ctx.Done():
-// 			fmt.Println(ctx.Err())
-// 			break CTXLOOP
-// 		case <-ch:
-// 			fmt.Println("success")
-// 			break CTXLOOP
-// 		}
-// 	}
-// 	fmt.Println("#######")
-// }
-
-// 70.iota
-// const (
-// 	c1 = iota
-// 	c2
-// 	c3
-// )
-
-// const (
-// 	_      = iota
-// 	KB int = 1 << (10 * iota)
-// 	MB
-// 	GB
-// )
-
-// func main() {
-// 	fmt.Println(c1, c2, c3)
-// 	fmt.Println(KB, MB, GB)
-// }
-
-// 69.Sort
-// func main() {
-// 	i := []int{5, 3, 2, 8, 7}
-// 	s := []string{"d", "a", "f"}
-// 	p := []struct {
+// // Unmarshalのカスタマイズ
+// func (p *Person) UnmarshalJSON(b []byte) error {
+// 	type Person2 struct {
 // 		Name string
-// 		Age  int
-// 	}{
-// 		{"Nancy", 20},
-// 		{"Vera", 40},
-// 		{"Mike", 30},
-// 		{"Bob", 50},
 // 	}
-// 	fmt.Println(i, s, p)
-// 	sort.Ints(i)
-// 	sort.Strings(s)
-// 	sort.Slice(p, func(i, j int) bool { return p[i].Name < p[j].Name })
-// 	sort.Slice(p, func(i, j int) bool { return p[i].Age < p[j].Age })
-// 	fmt.Println(i, s, p)
+// 	var p2 Person2
+// 	err := json.Unmarshal(b, &p2)
+// 	if err != nil {
+// 		fmt.Println(err)
+// 	}
+// 	p.Name = p2.Name + "!"
+// 	return err
 // }
 
-// 68.regex
+// // Marshalのカスタマイズ
+// // func (p Person) MarshalJSON() ([]byte, error) {
+// // 	v, err := json.Marshal(&struct {
+// // 		Name string
+// // 	}{
+// // 		Name: "Mr." + p.Name,
+// // 	})
+// // 	return v, err
+// // }
+
 // func main() {
-// 	match, _ := regexp.MatchString("a([a-z0-9]+)e", "appl0e")
-// 	fmt.Println(match)
+// 	b := []byte(`{"name":"mike", "age":0,"nicknames":["a","b","c"]}`)
+// 	var p Person
+// 	if err := json.Unmarshal(b, &p); err != nil {
+// 		fmt.Println(err)
+// 	}
+// 	fmt.Println(p.Name, p.Age, p.NickNames)
 
-// 	r := regexp.MustCompile("a([a-z]+)e")
-// 	ms := r.MatchString("apple")
-// 	fmt.Println(ms)
-
-// 	r2 := regexp.MustCompile("^/(edit|save|view)/([a-zA-z0-9]+)$")
-// 	fs := r2.FindString("/view/test")
-// 	fmt.Println(fs)
-// 	fss := r2.FindStringSubmatch("/view/test")
-// 	fmt.Println(fss, fss[0], fss[1], fss[2])
+// 	v, _ := json.Marshal(p)
+// 	fmt.Println(string(v))
 // }
 
-// 67.time
-/*
-https://pkg.go.dev/time
-
-Constants ¶
-View Source
-const (
-	Layout      = "01/02 03:04:05PM '06 -0700" // The reference time, in numerical order.
-	ANSIC       = "Mon Jan _2 15:04:05 2006"
-	UnixDate    = "Mon Jan _2 15:04:05 MST 2006"
-	RubyDate    = "Mon Jan 02 15:04:05 -0700 2006"
-	RFC822      = "02 Jan 06 15:04 MST"
-	RFC822Z     = "02 Jan 06 15:04 -0700" // RFC822 with numeric zone
-	RFC850      = "Monday, 02-Jan-06 15:04:05 MST"
-	RFC1123     = "Mon, 02 Jan 2006 15:04:05 MST"
-	RFC1123Z    = "Mon, 02 Jan 2006 15:04:05 -0700" // RFC1123 with numeric zone
-	RFC3339     = "2006-01-02T15:04:05Z07:00"
-	RFC3339Nano = "2006-01-02T15:04:05.999999999Z07:00"
-	Kitchen     = "3:04PM"
-	// Handy time stamps.
-	Stamp      = "Jan _2 15:04:05"
-	StampMilli = "Jan _2 15:04:05.000"
-	StampMicro = "Jan _2 15:04:05.000000"
-	StampNano  = "Jan _2 15:04:05.000000000"
-)
-*/
-
+// 73.http
 // func main() {
-// 	t := time.Now()
-// 	fmt.Println(t)
-// 	// postgreではRFC3339が標準
-// 	fmt.Println(t.Format(time.RFC3339))
-// 	fmt.Println(t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second())
+// 	// resp, _ := http.Get("http://example.com")
+// 	// defer resp.Body.Close()
+// 	// body, _ := ioutil.ReadAll(resp.Body)
+// 	// fmt.Println(string(body))
+
+// 	base, err := url.Parse("http://example.com/abdeojo")
+// 	reference, _ := url.Parse("/test?a=1&b=2")
+// 	endpoint := base.ResolveReference(reference).String()
+// 	fmt.Println(base, err)
+// 	fmt.Println(endpoint)
+// 	req, _ := http.NewRequest("GET", endpoint, nil)
+// 	// req, _ := http.NewRequest("POST", endpoint, bytes.NewBuffer([]byte("password")))
+// 	req.Header.Add("If-None-Match", `W/"wyzzy"`)
+// 	q := req.URL.Query()
+// 	q.Add("c", "3&%")
+// 	fmt.Println(q)
+// 	fmt.Println(q.Encode())
+// 	req.URL.RawQuery = q.Encode()
+
+// 	var client *http.Client = &http.Client{}
+// 	resp, _ := client.Do(req)
+// 	body, _ := ioutil.ReadAll(resp.Body)
+// 	fmt.Println(string(body))
 // }
