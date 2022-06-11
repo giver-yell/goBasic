@@ -1,3 +1,1 @@
-This is a simple page1
-This is a simple page2oo
-uu
+This is sample page
